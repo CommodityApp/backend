@@ -3,10 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\CategoryResource;
-use App\Filament\Resources\CustomerResource;
-use App\Filament\Resources\OptionResource;
 use App\Filament\Resources\RoleResource;
-use App\Filament\Resources\ShapeResource;
 use App\Filament\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -66,14 +63,11 @@ class AdminPanelProvider extends PanelProvider
                             ->icon('heroicon-o-home')
                             ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
                             ->url(fn (): string => Dashboard::getUrl()),
-                        ...CustomerResource::getNavigationItems(),
                     ])->collapsible(false),
                     NavigationGroup::make('Admin Management')->items([
                         ...UserResource::getNavigationItems(),
                         ...RoleResource::getNavigationItems(),
                         ...CategoryResource::getNavigationItems(),
-                        ...ShapeResource::getNavigationItems(),
-                        ...OptionResource::getNavigationItems(),
                     ])->collapsible(false),
                 ]);
             });
