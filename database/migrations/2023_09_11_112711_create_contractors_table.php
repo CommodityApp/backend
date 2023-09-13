@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('icon_path', 2048)->nullable();
-            $table->unsignedInteger('order_column')->nullable();
-            $table->string('status', 25)->default(StatusEnum::Published->value);
+            $table->string('industry')->nullable();
+            $table->string('region')->nullable();
+            $table->string('company')->nullable();
             $table->timestamps();
+
+            $table->unsignedBigInteger('country_id')->nullable();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('clients');
     }
 };
