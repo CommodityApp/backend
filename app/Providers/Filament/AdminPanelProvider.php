@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\AnimalTypeResource;
+use App\Filament\Resources\ProducerResource;
+use App\Filament\Resources\RawTypeResource;
 use App\Filament\Resources\RoleResource;
 use App\Filament\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
@@ -66,6 +69,9 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('Admin Management')->items([
                         ...UserResource::getNavigationItems(),
                         ...RoleResource::getNavigationItems(),
+                        ...AnimalTypeResource::getNavigationItems(),
+                        ...RawTypeResource::getNavigationItems(),
+                        ...ProducerResource::getNavigationItems(),
                     ])->collapsible(false),
                 ]);
             });
