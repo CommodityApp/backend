@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('batch_number')->nullable();
             $table->unsignedInteger('order_column')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unsignedBigInteger('raw_type_id')->nullable();
             $table->unsignedBigInteger('producer_id')->nullable();

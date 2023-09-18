@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->datetime('date')->nullable();
-            $table->unsignedFloat('order_amount');
-            $table->float('error');
+            $table->decimal('amount', 14, 4);
+            $table->decimal('error', 12, 4)->default(1);
             $table->integer('batch_quantity');
-            $table->json('batch_calculation');
+            $table->json('batch_inputs');
             $table->json('calculated_amount')->nullable();
             $table->json('calculated_amount_with_error')->nullable();
             $table->timestamps();

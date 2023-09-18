@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('raw_receipts', function (Blueprint $table) {
+        Schema::create('receipt_raws', function (Blueprint $table) {
             $table->id();
-            $table->float('ratio')->nullable();
+            $table->decimal('ratio', 14, 4)->default(0);
+            $table->unsignedInteger('order_column');
             $table->timestamps();
 
             $table->unsignedBigInteger('raw_id');
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('raw_receipts');
+        Schema::dropIfExists('receipt_raws');
     }
 };

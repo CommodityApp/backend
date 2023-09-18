@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->float('rate')->nullable();
+            $table->decimal('rate', 14, 4)->nullable();
             $table->string('code')->nullable()->unique();
             $table->string('name')->nullable();
             $table->string('unit')->nullable();
             $table->string('producer_name')->nullable();
-            $table->float('concentration')->nullable();
+            $table->decimal('concentration', 14, 4)->nullable();
+            $table->unsignedInteger('order_column')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

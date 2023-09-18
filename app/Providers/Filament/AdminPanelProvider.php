@@ -3,8 +3,13 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Resources\AnimalTypeResource;
+use App\Filament\Resources\BunkerResource;
+use App\Filament\Resources\ClientResource;
+use App\Filament\Resources\OrderResource;
 use App\Filament\Resources\ProducerResource;
+use App\Filament\Resources\RawResource;
 use App\Filament\Resources\RawTypeResource;
+use App\Filament\Resources\ReceiptResource;
 use App\Filament\Resources\RoleResource;
 use App\Filament\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
@@ -65,13 +70,18 @@ class AdminPanelProvider extends PanelProvider
                             ->icon('heroicon-o-home')
                             ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
                             ->url(fn (): string => Dashboard::getUrl()),
+                        ...AnimalTypeResource::getNavigationItems(),
+                        ...RawTypeResource::getNavigationItems(),
+                        ...ProducerResource::getNavigationItems(),
+                        ...ReceiptResource::getNavigationItems(),
+                        ...RawResource::getNavigationItems(),
+                        ...BunkerResource::getNavigationItems(),
+                        ...ClientResource::getNavigationItems(),
+                        ...OrderResource::getNavigationItems(),
                     ])->collapsible(false),
                     NavigationGroup::make('Admin Management')->items([
                         ...UserResource::getNavigationItems(),
                         ...RoleResource::getNavigationItems(),
-                        ...AnimalTypeResource::getNavigationItems(),
-                        ...RawTypeResource::getNavigationItems(),
-                        ...ProducerResource::getNavigationItems(),
                     ])->collapsible(false),
                 ]);
             });
