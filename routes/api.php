@@ -19,5 +19,5 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile']);
-    Route::get('/client', [ClientController::class, 'index']);
+    Route::get('/clients', [ClientController::class, 'index']);
 });
