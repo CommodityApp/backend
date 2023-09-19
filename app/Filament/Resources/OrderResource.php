@@ -8,8 +8,6 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Infolists;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -87,15 +85,6 @@ class OrderResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
-    {
-        return $infolist
-            ->schema([
-                Infolists\Components\TextEntry::make('amount'),
-                Infolists\Components\TextEntry::make('date'),
-            ]);
-    }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -142,6 +131,7 @@ class OrderResource extends Resource
                 ]),
             ])
             ->emptyStateActions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\CreateAction::make(),
             ]);
     }
@@ -158,6 +148,7 @@ class OrderResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
+            'view' => Pages\ViewOrderCalculatedPage::route('/{record}'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }

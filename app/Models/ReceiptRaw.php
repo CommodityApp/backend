@@ -28,4 +28,9 @@ class ReceiptRaw extends Model
     {
         return $this->belongsTo(Receipt::class);
     }
+
+    public function orderCalculatedRaws()
+    {
+        return $this->hasMany(ReceiptRaw::class, 'receipt_raw_id');
+    }
 }

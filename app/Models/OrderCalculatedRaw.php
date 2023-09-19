@@ -23,4 +23,5 @@ class OrderCalculatedRaw extends Model
     {
         return $this->belongsTo(ReceiptRaw::class);
     }
+
 }
