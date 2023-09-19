@@ -19,4 +19,9 @@ class AnimalType extends Model
     {
         return $this->hasMany(self::class, 'parent_id');
     }
+
+    public function nestedChildren()
+    {
+        return $this->children()->with('nestedChildren');
+    }
 }
