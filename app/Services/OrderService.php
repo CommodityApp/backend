@@ -74,6 +74,6 @@ class OrderService
             $result[] = array_sum(array_column($array, $key));
         }
 
-        return $array;
+        return $result;
     }
 }

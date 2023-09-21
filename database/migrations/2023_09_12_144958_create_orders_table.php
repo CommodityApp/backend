@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('receipt_id')->nullable();
             $table->unsignedBigInteger('animal_type_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
         });
     }
 

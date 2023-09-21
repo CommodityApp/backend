@@ -20,7 +20,6 @@ class CreateOrder extends CreateRecord
     {
         $orderService = new OrderService();
 
-        $data['batch_inputs'] = array_column($data['batch_inputs'], 'amount');
         $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
 
         return $orderService->create($data);
@@ -59,10 +58,6 @@ class CreateOrder extends CreateRecord
 
                                     $arr = array_fill(0, intval($get('batch_quantity')), []);
 
-                                    foreach ($arr as $key => $value) {
-                                        $arr[$key]['index'] = $key;
-                                    }
-
                                     return $set('batch_inputs', $arr);
                                 } else {
                                     return $set('batch_inputs', []);
@@ -73,6 +68,12 @@ class CreateOrder extends CreateRecord
 
             Forms\Components\Wizard\Step::make('Задание на пр-во')
                 ->schema([
+                    Forms\Components\Select::make('animal_type_id')
+                        ->relationship(name: 'animalType', titleAttribute: 'name')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+
                     Forms\Components\TextInput::make('amount')
                         ->numeric()
                         ->required(),

@@ -45,4 +45,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderCalculatedRaw::class);
     }
+
+    public function animalType()
+    {
+        return $this->belongsTo(AnimalType::class);
+    }
 }

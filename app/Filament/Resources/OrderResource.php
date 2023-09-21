@@ -131,7 +131,6 @@ class OrderResource extends Resource
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\CreateAction::make(),
             ]);
     }
