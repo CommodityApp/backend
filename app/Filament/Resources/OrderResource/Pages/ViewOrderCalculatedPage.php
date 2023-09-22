@@ -24,9 +24,16 @@ class ViewOrderCalculatedPage extends Page implements HasForms, HasInfolists
 
     public Order $record;
 
+    public int $activeTab = 0;
+
     public function getTitle(): string|Htmlable
     {
         return __("Заказ №{$this->record->id}");
+    }
+
+    public function updateTab(int $tab)
+    {
+        $this->activeTab = $tab;
     }
 
     public function orderInfolist(Infolist $infolist): Infolist

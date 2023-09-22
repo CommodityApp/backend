@@ -10,6 +10,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class ViewOrderCalculatedTable extends Component implements HasForms, HasTable
@@ -18,6 +19,9 @@ class ViewOrderCalculatedTable extends Component implements HasForms, HasTable
     use InteractsWithTable;
 
     public Order $record;
+
+    #[Reactive]
+    public int $index;
 
     public function render()
     {
@@ -31,9 +35,8 @@ class ViewOrderCalculatedTable extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('receiptRaw.raw.name'),
                 TextColumn::make('receiptRaw.ratio'),
-                TextColumn::make('calculated_amount.0'),
-                TextColumn::make('calculated_amount_with_error.0'),
-
+                TextColumn::make('calculated_amount.'.$this->index),
+                TextColumn::make('calculated_amount_with_error.'.$this->index),
             ])
             ->filters([
                 // ...
@@ -43,6 +46,6 @@ class ViewOrderCalculatedTable extends Component implements HasForms, HasTable
             ])
             ->bulkActions([
                 // ...
-            ]);
+            ])->paginated(false);
     }
 }
