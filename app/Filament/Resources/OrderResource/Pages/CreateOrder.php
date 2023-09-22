@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
+use App\Models\AnimalType;
 use App\Services\OrderService;
 use Filament\Forms;
 use Filament\Forms\Get;
@@ -55,9 +56,7 @@ class CreateOrder extends CreateRecord
                         ->afterStateUpdated(
                             function (Get $get, Set $set) {
                                 if ($get('batch_quantity') > 0 && $get('batch_quantity') < 30) {
-
                                     $arr = array_fill(0, intval($get('batch_quantity')), []);
-
                                     return $set('batch_inputs', $arr);
                                 } else {
                                     return $set('batch_inputs', []);
@@ -69,7 +68,7 @@ class CreateOrder extends CreateRecord
             Forms\Components\Wizard\Step::make('Задание на пр-во')
                 ->schema([
                     Forms\Components\Select::make('animal_type_id')
-                        ->relationship(name: 'animalType', titleAttribute: 'name')
+                        ->options(AnimalType::treeView())
                         ->searchable()
                         ->preload()
                         ->required(),

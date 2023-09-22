@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\OrderResource;
 use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -27,32 +28,24 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, OrderService $orderService)
     {
-        //
-    }
+        $data = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'receipt_id' => 'required|exists:receipts,id',
+            'batch_quantity' => 'required|numeric|min:1|max:30',
+            'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
+            'batch_inputs.*' => 'required|numeric',
+            'animal_type_id' => 'required|exists:animal_types,id',
+            'amount' => 'required|numeric',
+            'error' => 'required|numeric',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $orderService = new OrderService();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return new OrderResource($orderService->create($data)->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice'));
+
     }
 }

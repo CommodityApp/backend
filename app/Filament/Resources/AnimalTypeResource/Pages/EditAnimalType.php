@@ -16,4 +16,24 @@ class EditAnimalType extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    /**
+     * @return array<string>
+     */
+    public function getBreadcrumbs(): array
+    {
+        $array = [];
+        $resource = static::getResource();
+        $breadcrumb = $this->getBreadcrumb();
+
+        foreach ($this->record->recursiveParentNames() as $id => $data) {
+            $array[$resource::getUrl()."/{$data['id']}/edit"] = $data['name'];
+        }
+
+        return [
+            $resource::getUrl() => $resource::getBreadcrumb(),
+            ...$array,
+            ...(filled($breadcrumb) ? [$breadcrumb] : []),
+        ];
+    }
 }

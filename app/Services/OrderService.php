@@ -17,9 +17,7 @@ class OrderService
         $receiptRaws = $receipt->receiptRaws;
 
         foreach ($receiptRaws as $receiptRaw) {
-            $orderCalculatedRaws[] = [
-                'receipt_raw_id' => $receiptRaw->id,
-
+            $orderCalculatedRaws[$receiptRaw->id] = [
                 'calculated_amount' => $this->calculateAmount(
                     batchInputs: $data['batch_inputs'],
                     ratio: $receiptRaw->ratio,
@@ -38,11 +36,58 @@ class OrderService
         $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'));
         $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'));
 
+        $orderCalculatedRaws = array_map(fn ($entry): array => [
+            'calculated_amount' => json_encode($entry['calculated_amount']),
+            'calculated_amount_with_error' => json_encode($entry['calculated_amount_with_error']),
+        ], $orderCalculatedRaws);
+
         /** @var Order $order */
         $order = Order::create($data);
 
-        $order->orderCalculatedRaws()
-            ->createMany($orderCalculatedRaws);
+        $order->receiptRaws()
+            ->sync($orderCalculatedRaws);
+
+        return $order;
+    }
+
+    public function update(Order $order, array $data): Order
+    {
+        /** @var Receipt $receipt */
+        $orderCalculatedRaws = [];
+
+        $receipt = Receipt::findOrFail($data['receipt_id']);
+        $totalRatio = $receipt->ratio;
+        $receiptRaws = $receipt->receiptRaws;
+
+        foreach ($receiptRaws as $receiptRaw) {
+            $orderCalculatedRaws[$receiptRaw->id] = [
+                'calculated_amount' => $this->calculateAmount(
+                    batchInputs: $data['batch_inputs'],
+                    ratio: $receiptRaw->ratio,
+                    totalRatio: $totalRatio
+                ),
+
+                'calculated_amount_with_error' => $this->calculateAmount(
+                    batchInputs: $data['batch_inputs'],
+                    ratio: $receiptRaw->ratio,
+                    totalRatio: $totalRatio,
+                    error: $data['error']
+                ),
+            ];
+        }
+
+        $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'));
+        $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'));
+
+        $orderCalculatedRaws = array_map(fn ($entry): array => [
+            'calculated_amount' => json_encode($entry['calculated_amount']),
+            'calculated_amount_with_error' => json_encode($entry['calculated_amount_with_error']),
+        ], $orderCalculatedRaws);
+
+        $order->update($data);
+
+        $order->receiptRaws()
+            ->sync($orderCalculatedRaws);
 
         return $order;
     }

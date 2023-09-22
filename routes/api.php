@@ -29,5 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/animal-types', [AnimalTypeController::class, 'index']);
     Route::get('/raws', [RawController::class, 'index']);
     Route::get('/receipts', [ReceiptController::class, 'index']);
-    Route::get('/orders', [OrderController::class, 'index']);
+    Route::resource('orders', OrderController::class)->only([
+        'index', 'store',
+    ]);
 });

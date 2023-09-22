@@ -15,6 +15,11 @@ class AnimalType extends Model
         $query->whereNull('parent_id');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
     public function children()
     {
         return $this->hasMany(self::class, 'parent_id');
@@ -23,5 +28,42 @@ class AnimalType extends Model
     public function nestedChildren()
     {
         return $this->children()->with('nestedChildren');
+    }
+
+    public function nestedParent()
+    {
+        return $this->parent()->with('nestedParent');
+    }
+
+    public static function treeView(): array
+    {
+        $results = self::root()->with('nestedChildren')->get();
+        $array = [];
+
+        foreach ($results as $result) {
+            $array[$result->name] = $result->recursiveChildrenNames();
+        }
+
+        return $array;
+    }
+
+    public function recursiveChildrenNames(): array
+    {
+        $names = [];
+
+        foreach ($this->nestedChildren as $child) {
+            $names[$child->id] = $child->name;
+        }
+
+        return $names;
+    }
+
+    public function recursiveParentNames(): array
+    {
+        if ($parent = $this->nestedParent) {
+            return [...$parent->recursiveParentNames(), ['id' => $this->id, 'name' => $this->name]];
+        }
+
+        return [['id' => $this->id, 'name' => $this->name]];
     }
 }
