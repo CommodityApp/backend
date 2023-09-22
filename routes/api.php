@@ -30,6 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/raws', [RawController::class, 'index']);
     Route::get('/receipts', [ReceiptController::class, 'index']);
     Route::resource('orders', OrderController::class)->only([
-        'index', 'store',
+        'index', 'store', 'show'
     ]);
 });

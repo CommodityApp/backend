@@ -46,6 +46,13 @@ class OrderController extends Controller
         $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
 
         return new OrderResource($orderService->create($data)->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice'));
+    }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(Order $order)
+    {
+        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'animalType', 'receipt', 'client'));
     }
 }
