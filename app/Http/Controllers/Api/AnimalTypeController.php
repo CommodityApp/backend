@@ -20,7 +20,7 @@ class AnimalTypeController extends Controller
             ->allowedSorts('id', 'name');
 
         if ($request->input('tree', false)) {
-            $animalTypes = $animalTypes->with('nestedChildren');
+            $animalTypes = $animalTypes->root()->with('nestedChildren');
         }
 
         return AnimalTypeResource::collection($animalTypes->get());
