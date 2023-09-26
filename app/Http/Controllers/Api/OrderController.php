@@ -39,6 +39,7 @@ class OrderController extends Controller
             'animal_type_id' => 'required|exists:animal_types,id',
             'amount' => 'required|numeric',
             'error' => 'required|numeric',
+            'date' => 'required|date',
         ]);
 
         $orderService = new OrderService();

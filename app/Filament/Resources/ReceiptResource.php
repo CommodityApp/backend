@@ -39,9 +39,11 @@ class ReceiptResource extends Resource
                     ->rules([
                         function (?Model $record) {
                             return function (string $attribute, $value, Closure $fail) use ($record) {
-                                $sum = $record->receiptRaws->sum('ratio');
-                                if ($value < $record->receiptRaws->sum('ratio')) {
-                                    $fail('The :attribute should be greater than total');
+                                if ($record) {
+                                    $sum = $record->receiptRaws()->sum('ratio');
+                                    if ($value < $sum) {
+                                        $fail('The :attribute should be greater than total');
+                                    }
                                 }
                             };
                         },
