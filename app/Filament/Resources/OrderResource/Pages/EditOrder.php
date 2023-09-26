@@ -5,6 +5,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource;
 use App\Models\AnimalType;
 use App\Services\OrderService;
+use Closure;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -53,7 +54,18 @@ class EditOrder extends EditRecord
 
                 Forms\Components\TextInput::make('amount')
                     ->numeric()
-                    ->required(),
+                    ->required()
+                    ->rules([
+                        function (Get $get) {
+                            return function (string $attribute, $value, Closure $fail) use ($get) {
+                                $sum = array_sum(array_column($get('batch_inputs'), 'amount'));
+
+                                if ($value != floatval($sum)) {
+                                    $fail(":attribute should be equal to {$sum}");
+                                }
+                            };
+                        },
+                    ]),
 
                 Forms\Components\TextInput::make('error')
                     ->numeric()

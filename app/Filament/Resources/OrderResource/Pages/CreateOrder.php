@@ -5,6 +5,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource;
 use App\Models\AnimalType;
 use App\Services\OrderService;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -57,6 +58,7 @@ class CreateOrder extends CreateRecord
                             function (Get $get, Set $set) {
                                 if ($get('batch_quantity') > 0 && $get('batch_quantity') < 30) {
                                     $arr = array_fill(0, intval($get('batch_quantity')), []);
+
                                     return $set('batch_inputs', $arr);
                                 } else {
                                     return $set('batch_inputs', []);
@@ -75,7 +77,18 @@ class CreateOrder extends CreateRecord
 
                     Forms\Components\TextInput::make('amount')
                         ->numeric()
-                        ->required(),
+                        ->required()
+                        ->rules([
+                            function (Get $get) {
+                                return function (string $attribute, $value, Closure $fail) use ($get) {
+                                    $sum = array_sum(array_column($get('batch_inputs'), 'amount'));
+
+                                    if ($value != floatval($sum)) {
+                                        $fail(":attribute should be equal to {$sum}");
+                                    }
+                                };
+                            },
+                        ]),
 
                     Forms\Components\TextInput::make('error')
                         ->numeric()
@@ -86,14 +99,14 @@ class CreateOrder extends CreateRecord
                         ->simple(
                             Forms\Components\TextInput::make('amount')
                                 ->numeric()
-                                ->required(),
+                                ->required()->live(),
                         )
                         ->grid(2)
                         ->maxItems(30)
                         ->addable(false)
                         ->reorderable(false)
                         ->deletable(false)
-                        ->itemLabel(fn (array $state): ?string => '#'.(dd($state) ?? 0) + 1),
+                        ->live(),
                 ]),
         ];
     }
