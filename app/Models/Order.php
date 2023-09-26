@@ -20,6 +20,7 @@ class Order extends Model
         'batch_inputs' => 'array',
         'calculated_amount' => 'array',
         'calculated_amount_with_error' => 'array',
+        'date' => 'datetime:Y-m-d',
     ];
 
     /**
