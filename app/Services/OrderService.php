@@ -116,7 +116,7 @@ class OrderService
         $result = [];
 
         foreach ($array[0] as $key => $v) {
-            $result[] = array_sum(array_column($array, $key));
+            $result[] = round(floatval(array_sum(array_column($array, $key))), 4);
         }
 
         return $result;
