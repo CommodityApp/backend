@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AnimalTypeController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BunkerController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\OrderController;
@@ -24,12 +25,11 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile']);
-    Route::apiResource('clients', ClientController::class);
-    Route::get('/countries', [CountryController::class, 'index']);
     Route::apiResource('animal-types', AnimalTypeController::class);
+    Route::apiResource('bunkers', BunkerController::class);
+    Route::apiResource('clients', ClientController::class);
+    Route::apiResource('orders', OrderController::class);
+    Route::apiResource('receipts', ReceiptController::class);
+    Route::get('/countries', [CountryController::class, 'index']);
     Route::get('/raws', [RawController::class, 'index']);
-    Route::get('/receipts', [ReceiptController::class, 'index']);
-    Route::resource('orders', OrderController::class)->only([
-        'index', 'store', 'show',
-    ]);
 });

@@ -37,7 +37,7 @@ class OrderController extends Controller
             'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
             'batch_inputs.*' => 'required|numeric',
             'animal_type_id' => 'required|exists:animal_types,id',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|size:'.array_sum($request->input('batch_inputs', [])),
             'error' => 'required|numeric',
             'date' => 'required|date',
         ]);
@@ -55,5 +55,41 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'animalType', 'receipt', 'client'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Order $order)
+    {
+        $data = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'receipt_id' => 'required|exists:receipts,id',
+            'batch_quantity' => 'required|numeric|min:1|max:30',
+            'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
+            'batch_inputs.*' => 'required|numeric',
+            'animal_type_id' => 'required|exists:animal_types,id',
+            'amount' => 'required|numeric|size:'.array_sum($request->input('batch_inputs', [])),
+            'error' => 'required|numeric',
+            'date' => 'required|date',
+        ]);
+
+        $orderService = new OrderService();
+
+        $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
+
+        $order = $orderService->update($order, $data);
+
+        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Order $order)
+    {
+        $order->delete();
+
+        return $order->id;
     }
 }
