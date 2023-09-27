@@ -49,8 +49,36 @@ class CreateOrder extends CreateRecord
                         ->preload()
                         ->required(),
 
+                    Forms\Components\TextInput::make('amount')
+                        ->numeric()
+                        ->required(),
+                    // ->rules([
+                    //     function (Get $get) {
+                    //         return function (string $attribute, $value, Closure $fail) use ($get) {
+                    //             $sum = array_sum(array_column($get('batch_inputs'), 'amount'));
+
+                    //             if ($value != floatval($sum)) {
+                    //                 $fail(":attribute should be equal to {$sum}");
+                    //             }
+                    //         };
+                    //     },
+                    // ]),
+                ]),
+
+            Forms\Components\Wizard\Step::make('Задание на пр-во')
+                ->schema([
+                    Forms\Components\Select::make('animal_type_id')
+                        ->options(AnimalType::treeView())
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+
+                    Forms\Components\TextInput::make('error')
+                        ->numeric()
+                        ->inputMode('decimal')
+                        ->required(),
+
                     Forms\Components\TextInput::make('batch_quantity')
-                        ->default(1)
                         ->numeric()
                         ->live()
                         ->debounce(600)
@@ -65,37 +93,9 @@ class CreateOrder extends CreateRecord
                                 }
                             }
                         ),
-                ]),
-
-            Forms\Components\Wizard\Step::make('Задание на пр-во')
-                ->schema([
-                    Forms\Components\Select::make('animal_type_id')
-                        ->options(AnimalType::treeView())
-                        ->searchable()
-                        ->preload()
-                        ->required(),
-
-                    Forms\Components\TextInput::make('amount')
-                        ->numeric()
-                        ->required()
-                        ->rules([
-                            function (Get $get) {
-                                return function (string $attribute, $value, Closure $fail) use ($get) {
-                                    $sum = array_sum(array_column($get('batch_inputs'), 'amount'));
-
-                                    if ($value != floatval($sum)) {
-                                        $fail(":attribute should be equal to {$sum}");
-                                    }
-                                };
-                            },
-                        ]),
-
-                    Forms\Components\TextInput::make('error')
-                        ->numeric()
-                        ->inputMode('decimal')
-                        ->required(),
 
                     Forms\Components\Repeater::make('batch_inputs')
+                        ->hidden(fn (Get $get) => $get('batch_quantity') <= 0)
                         ->simple(
                             Forms\Components\TextInput::make('amount')
                                 ->numeric()

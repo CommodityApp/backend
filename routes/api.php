@@ -24,12 +24,12 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile']);
-    Route::get('/clients', [ClientController::class, 'index']);
+    Route::apiResource('clients', ClientController::class);
     Route::get('/countries', [CountryController::class, 'index']);
-    Route::get('/animal-types', [AnimalTypeController::class, 'index']);
+    Route::apiResource('animal-types', AnimalTypeController::class);
     Route::get('/raws', [RawController::class, 'index']);
     Route::get('/receipts', [ReceiptController::class, 'index']);
     Route::resource('orders', OrderController::class)->only([
-        'index', 'store', 'show'
+        'index', 'store', 'show',
     ]);
 });

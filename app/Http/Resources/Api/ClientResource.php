@@ -14,6 +14,15 @@ class ClientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'region' => $this->region,
+            'company' => $this->company,
+            'industry' => $this->industry,
+            'created_at' => $this->created_at->formattedCustom(),
+            'updated_at' => $this->updated_at->formattedCustom(),
+            'country' => new CountryResource($this->whenLoaded('country')),
+        ];
     }
 }

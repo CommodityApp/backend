@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Filament\Tables\Columns\Column;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -33,5 +34,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Model::unguard();
+
+        Carbon::macro('formattedCustom', static function () {
+            return Carbon::this()->format('Y-m-d, H:i');
+        });
     }
 }

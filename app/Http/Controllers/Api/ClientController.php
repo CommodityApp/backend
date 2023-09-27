@@ -29,30 +29,52 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'industry' => 'nullable|string',
+            'region' => 'nullable|string',
+            'company' => 'nullable|string',
+            'country_id' => 'exists:countries,id',
+        ]);
+
+        $client = Client::create($data);
+
+        return new ClientResource($client->load('country'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Client $client)
     {
-        //
+        return new ClientResource($client->load('country'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Client $client)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'industry' => 'nullable|string',
+            'region' => 'nullable|string',
+            'company' => 'nullable|string',
+            'country_id' => 'exists:countries,id',
+        ]);
+
+        $client->update($data);
+
+        return new ClientResource($client->load('country'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Client $client)
     {
-        //
+        $client->delete();
+
+        return $client->id;
     }
 }

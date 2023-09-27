@@ -4,6 +4,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
+use Filament\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Infolists\Components;
@@ -12,6 +13,7 @@ use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 class ViewOrderCalculatedPage extends Page implements HasForms, HasInfolists
 {
@@ -48,5 +50,18 @@ class ViewOrderCalculatedPage extends Page implements HasForms, HasInfolists
                 Components\TextEntry::make('receipt.name'),
                 Components\TextEntry::make('animalType.name'),
             ])->columns(3);
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('pdf')
+                ->label('PDF')
+                ->color('success')
+                ->icon('heroicon-s-folder-arrow-down')
+                ->action(function (Model $record) {
+                  
+                }),
+        ];
     }
 }

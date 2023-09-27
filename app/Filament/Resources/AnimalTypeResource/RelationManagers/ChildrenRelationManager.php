@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ChildrenRelationManager extends RelationManager
 {
@@ -41,5 +42,10 @@ class ChildrenRelationManager extends RelationManager
                     ->url(fn (AnimalType $record): string => route('filament.admin.resources.animal-types.edit', $record)),
             ])
             ->paginated(false);
+    }
+
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
+    {
+        return $ownerRecord->parent_id == null;
     }
 }

@@ -24,8 +24,10 @@ class ReceiptResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('rate')
+                    ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('code')
+                    ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name')
