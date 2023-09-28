@@ -16,7 +16,7 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'date' => $this->date->formattedCustom(),
+            'date' => $this->date->formattedCustom('Y-m-d'),
             'amount' => $this->amount,
             'error' => $this->error,
             'batch_quantity' => $this->batch_quantity,
