@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Receipt;
 
+use App\Rules\ConcentrationSumOfRatios;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +29,7 @@ class UpdateReceiptRequest extends FormRequest
             'name' => 'required|string|max:255',
             'unit' => 'present|max:255',
             'producer_name' => 'present|max:255',
-            'concentration' => 'required|numeric|min:0',
+            'concentration' => ['required', 'numeric', 'min:0', new ConcentrationSumOfRatios],
 
             'receipt_raws' => 'present|array',
             'receipt_raws.*.raw_id' => 'required|distinct|exists:raws,id',

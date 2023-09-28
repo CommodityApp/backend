@@ -13,7 +13,6 @@ class ReceiptService
         $raws = [];
 
         foreach ($receiptRaws as $key => $receiptRaw) {
-            dd($key);
             $raws[$receiptRaw['raw_id']] = ['ratio' => $receiptRaw['ratio'], 'order_column' => $key + 1];
         }
 
