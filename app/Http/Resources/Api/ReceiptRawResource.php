@@ -17,6 +17,7 @@ class ReceiptRawResource extends JsonResource
         return [
             'id' => $this->id,
             'ratio' => $this->ratio,
+            'order_column' => $this->order_column,
             'raw' => new RawResource($this->whenLoaded('raw')),
         ];
     }

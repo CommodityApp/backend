@@ -26,6 +26,11 @@ class Receipt extends Model
         return $this->hasMany(ReceiptRaw::class)->ordered();
     }
 
+    public function raws()
+    {
+        return $this->belongsToMany(Raw::class, 'receipt_raws');
+    }
+
     public function ratio(): Attribute
     {
         return Attribute::make(

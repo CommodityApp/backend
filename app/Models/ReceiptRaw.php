@@ -33,4 +33,9 @@ class ReceiptRaw extends Model
     {
         return $this->hasMany(ReceiptRaw::class, 'receipt_raw_id');
     }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('receipt_id', $this->receipt_id);
+    }
 }
