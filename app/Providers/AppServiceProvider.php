@@ -35,8 +35,8 @@ class AppServiceProvider extends ServiceProvider
 
         Model::unguard();
 
-        Carbon::macro('formattedCustom', static function () {
-            return Carbon::this()->format('Y-m-d, H:i');
+        Carbon::macro('formattedCustom', static function (string $format = null) {
+            return Carbon::this()->format($format ?? 'Y-m-d, H:i');
         });
     }
 }
