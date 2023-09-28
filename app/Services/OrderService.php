@@ -33,8 +33,8 @@ class OrderService
             ];
         }
 
-        $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'));
-        $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'));
+        $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'), $data['batch_inputs']);
+        $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'), $data['batch_inputs']);
 
         $orderCalculatedRaws = array_map(fn ($entry): array => [
             'calculated_amount' => json_encode($entry['calculated_amount']),
@@ -76,8 +76,8 @@ class OrderService
             ];
         }
 
-        $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'));
-        $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'));
+        $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'), $data['batch_inputs']);
+        $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'), $data['batch_inputs']);
 
         $orderCalculatedRaws = array_map(fn ($entry): array => [
             'calculated_amount' => json_encode($entry['calculated_amount']),
@@ -111,11 +111,11 @@ class OrderService
         return $array;
     }
 
-    public function sumArray(array $array)
+    public function sumArray(array $array, array $batch_inputs)
     {
         $result = [];
 
-        foreach ($array[0] as $key => $v) {
+        foreach ($batch_inputs as $key => $v) {
             $result[] = round(floatval(array_sum(array_column($array, $key))), 4);
         }
 
