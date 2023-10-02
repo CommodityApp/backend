@@ -20,8 +20,8 @@ class CountryResource extends JsonResource
             'country_code' => $this->country_code,
             'iso_3166_2' => $this->iso_3166_2,
             'iso_3166_3' => $this->iso_3166_3,
-            'created_at' => $this->created_at->formattedCustom(),
-            'updated_at' => $this->updated_at->formattedCustom(),
+            'created_at' => $this->created_at?->formattedCustom(),
+            'updated_at' => $this->updated_at?->formattedCustom(),
         ];
     }
 }

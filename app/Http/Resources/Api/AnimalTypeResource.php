@@ -18,8 +18,8 @@ class AnimalTypeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'parent_id' => $this->parent_id,
-            'created_at' => $this->created_at->formattedCustom(),
-            'updated_at' => $this->updated_at->formattedCustom(),
+            'created_at' => $this->created_at?->formattedCustom(),
+            'updated_at' => $this->updated_at?->formattedCustom(),
             'children' => self::collection($this->whenLoaded('nestedChildren')),
             'parent' => new self($this->whenLoaded('nestedParent')),
         ];

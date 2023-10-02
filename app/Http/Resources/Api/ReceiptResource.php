@@ -23,8 +23,8 @@ class ReceiptResource extends JsonResource
             'producer_name' => $this->producer_name,
             'concentration' => $this->concentration,
             'order_column' => $this->order_column,
-            'created_at' => $this->created_at->formattedCustom(),
-            'updated_at' => $this->updated_at->formattedCustom(),
+            'created_at' => $this->created_at?->formattedCustom(),
+            'updated_at' => $this->updated_at?->formattedCustom(),
             'deleted_at' => $this->deleted_at,
             'receipt_raws' => ReceiptRawResource::collection($this->whenLoaded('receiptRaws')),
         ];

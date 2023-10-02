@@ -17,8 +17,8 @@ class RawTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'created_at' => $this->created_at->formattedCustom(),
-            'updated_at' => $this->updated_at->formattedCustom(),
+            'created_at' => $this->created_at?->formattedCustom(),
+            'updated_at' => $this->updated_at?->formattedCustom(),
         ];
     }
 }

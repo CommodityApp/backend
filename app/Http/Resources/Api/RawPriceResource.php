@@ -20,8 +20,8 @@ class RawPriceResource extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'unit' => $this->unit,
-            'created_at' => $this->created_at->formattedCustom(),
-            'updated_at' => $this->updated_at->formattedCustom(),
+            'created_at' => $this->created_at?->formattedCustom(),
+            'updated_at' => $this->updated_at?->formattedCustom(),
         ];
     }
 }
