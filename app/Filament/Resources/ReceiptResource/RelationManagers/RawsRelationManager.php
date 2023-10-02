@@ -20,18 +20,25 @@ class RawsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('raw_id')
-                    ->label('Норма')
+                    ->label('Сырье')
+                    ->searchable()
                     ->required()
-                    ->options(function (Livewire $livewire, Get $get) {
-                        $selectedIds = $livewire->ownerRecord->receiptRaws->pluck('raw_id');
-
-                        return Raw::whereNotIn('id', $selectedIds)
-                            ->orWhere('id', $get('raw_id'))
-                            ->pluck('name', 'id');
-                    })
-                    ->searchable(),
+                    // ->options(function (RelationManager $livewire): array {
+                    //     return $livewire->getOwnerRecord()->stores()
+                    //         ->pluck('name', 'id')
+                    //         ->toArray();
+                    // })
+                    ->getSearchResultsUsing(
+                        fn (string $search, RelationManager $livewire): array => Raw::where('name', 'like', "%{$search}%")
+                            ->whereNotIn('id', $livewire->getOwnerRecord()->receiptRaws()->pluck('raw_id'))
+                            ->limit(10)
+                            ->pluck('name', 'id')
+                            ->toArray()
+                    )
+                    ->getOptionLabelUsing(fn ($value): ?string => Raw::find($value)?->name),
 
                 Forms\Components\TextInput::make('ratio')
+                    ->label('Норма')
                     ->numeric()
                     ->required(),
             ]);

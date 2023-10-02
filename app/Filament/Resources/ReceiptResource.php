@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReceiptResource\Pages;
 use App\Filament\Resources\ReceiptResource\RelationManagers\RawsRelationManager;
 use App\Models\Receipt;
+use App\Services\RawService;
 use App\Services\ReceiptService;
 use Closure;
 use Filament\Forms;
@@ -83,8 +84,6 @@ class ReceiptResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('clone')
                     ->action(
                         function (Receipt $record, ReceiptService $receiptService) {
@@ -93,6 +92,19 @@ class ReceiptResource extends Resource
                         }
                     )
                     ->requiresConfirmation(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('delete')
+                    ->color('danger')
+                    ->icon('heroicon-m-trash')
+                    ->requiresConfirmation()
+                    ->action(
+                        function (Receipt $record, ReceiptService $receiptService) {
+                            return $receiptService->delete($record);
+                        }
+                    )
+                    ->successNotificationTitle(__('filament-actions::delete.single.notifications.deleted.title')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
