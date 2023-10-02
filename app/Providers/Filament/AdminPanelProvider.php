@@ -66,20 +66,20 @@ class AdminPanelProvider extends PanelProvider
             ])->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
                     NavigationGroup::make('')->items([
-                        NavigationItem::make('Dashboard')
+                        NavigationItem::make('Дашборд')
                             ->icon('heroicon-o-home')
                             ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
                             ->url(fn (): string => Dashboard::getUrl()),
-                        ...AnimalTypeResource::getNavigationItems(),
-                        ...RawTypeResource::getNavigationItems(),
-                        ...ProducerResource::getNavigationItems(),
+                        ...OrderResource::getNavigationItems(),
                         ...ReceiptResource::getNavigationItems(),
                         ...RawResource::getNavigationItems(),
+                        ...RawTypeResource::getNavigationItems(),
+                        ...AnimalTypeResource::getNavigationItems(),
+                        ...ProducerResource::getNavigationItems(),
                         ...BunkerResource::getNavigationItems(),
                         ...ClientResource::getNavigationItems(),
-                        ...OrderResource::getNavigationItems(),
                     ])->collapsible(false),
-                    NavigationGroup::make('Admin Management')->items([
+                    NavigationGroup::make('Административное управлени')->items([
                         ...UserResource::getNavigationItems(),
                         ...RoleResource::getNavigationItems(),
                     ])->collapsible(false),

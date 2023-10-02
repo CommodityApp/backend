@@ -27,9 +27,8 @@ class ChildrenRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')->label('Наименование'),
             ])
             ->filters([
                 //
@@ -41,6 +40,7 @@ class ChildrenRelationManager extends RelationManager
                 Tables\Actions\Action::make('edit')
                     ->url(fn (AnimalType $record): string => route('filament.admin.resources.animal-types.edit', $record)),
             ])
+            ->heading('Типы животных')
             ->paginated(false);
     }
 

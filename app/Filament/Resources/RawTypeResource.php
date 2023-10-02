@@ -16,6 +16,11 @@ class RawTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Тип сырья';
+
+    protected static ?string $pluralModelLabel = 'Тип сырья';
+
+
     public static function form(Form $form): Form
     {
         return $form

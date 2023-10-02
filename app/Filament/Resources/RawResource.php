@@ -19,6 +19,8 @@ class RawResource extends Resource
 
     protected static ?string $modelLabel = 'Сырьё';
 
+    protected static ?string $pluralModelLabel = 'Сырьё';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -21,6 +21,10 @@ class ReceiptResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Рецепт';
+
+    protected static ?string $pluralModelLabel = 'Рецепты';
+
     public static function form(Form $form): Form
     {
         return $form

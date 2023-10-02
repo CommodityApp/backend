@@ -16,6 +16,10 @@ class BunkerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Бункер';
+
+    protected static ?string $pluralModelLabel = 'Бункеры';
+
     public static function form(Form $form): Form
     {
         return $form

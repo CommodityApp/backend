@@ -22,9 +22,9 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-cog';
 
-    protected static ?string $navigationLabel = 'Admins';
+    protected static ?string $navigationLabel = 'Пользователи';
 
-    protected static ?string $navigationGroup = 'Admin Management';
+    protected static ?string $navigationGroup = 'Административное управление';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -46,14 +46,14 @@ class UserResource extends Resource
                     ->maxLength(255)
                     ->dehydrateStateUsing(
                         static fn (?string $state): ?string => filled($state)
-                        ? bcrypt($state) : null,
+                            ? bcrypt($state) : null,
                     )->required(
                         static fn (Page $livewire): string => $livewire instanceof CreateUser,
                     )->dehydrated(
                         static fn (?string $state): bool => filled($state),
                     )->label(
                         static fn (Page $livewire): string => $livewire instanceof EditUser
-                        ? 'New Password' : 'Password',
+                            ? 'New Password' : 'Password',
                     ),
 
                 CheckboxList::make('roles')

@@ -18,6 +18,10 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Заказ';
+
+    protected static ?string $pluralModelLabel = 'Заказы';
+
 
     public static function table(Table $table): Table
     {

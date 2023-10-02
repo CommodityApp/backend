@@ -17,7 +17,11 @@ class RoleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Admin Management';
+    protected static ?string $navigationGroup = 'Административное управление';
+
+    protected static ?string $modelLabel = 'Роль';
+
+    protected static ?string $pluralModelLabel = 'Роли';
 
     protected static bool $shouldRegisterNavigation = false;
 
