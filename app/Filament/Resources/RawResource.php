@@ -17,6 +17,8 @@ class RawResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Сырьё';
+
     public static function form(Form $form): Form
     {
         return $form

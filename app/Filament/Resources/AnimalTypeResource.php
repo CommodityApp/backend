@@ -18,6 +18,11 @@ class AnimalTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Вид животного';
+
+    protected static ?string $pluralModelLabel = 'Виды животных';
+
+
     public static function form(Form $form): Form
     {
         return $form
