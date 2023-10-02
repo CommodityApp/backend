@@ -25,6 +25,7 @@ class RawResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name')
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('unit')
                     ->maxLength(255),
