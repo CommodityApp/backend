@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReceiptResource\Pages;
 use App\Filament\Resources\ReceiptResource\RelationManagers\RawsRelationManager;
 use App\Models\Receipt;
+use App\Services\ReceiptService;
 use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -84,6 +85,14 @@ class ReceiptResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('clone')
+                    ->action(
+                        function (Receipt $record, ReceiptService $receiptService) {
+                            $new = $receiptService->replicate($record);
+                            return redirect()->route('filament.admin.resources.receipts.edit', $new);
+                        }
+                    )
+                    ->requiresConfirmation(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

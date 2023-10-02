@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_calculated_raws', function (Blueprint $table) {
-            $table->id();
-            $table->json('calculated_amount');
-            $table->json('calculated_amount_with_error');
-            $table->timestamps();
+        Schema::withoutForeignKeyConstraints(function () {
+            Schema::create('order_calculated_raws', function (Blueprint $table) {
+                $table->id();
+                $table->json('calculated_amount');
+                $table->json('calculated_amount_with_error');
+                $table->timestamps();
 
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->unsignedBigInteger('receipt_raw_id')->nullable();
+                $table->foreignId('order_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+                $table->foreignId('receipt_raw_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unique(['order_id', 'receipt_raw_id']);
+                $table->unique(['order_id', 'receipt_raw_id']);
+            });
         });
     }
 

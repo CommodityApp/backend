@@ -21,12 +21,12 @@ class ReceiptRaw extends Model
 
     public function raw()
     {
-        return $this->belongsTo(Raw::class);
+        return $this->belongsTo(Raw::class)->withTrashed();
     }
 
     public function receipt()
     {
-        return $this->belongsTo(Receipt::class);
+        return $this->belongsTo(Receipt::class)->withTrashed();
     }
 
     public function orderCalculatedRaws()

@@ -22,7 +22,7 @@ class RawResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('code')
-                    ->unique(ignoreRecord: false)
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->maxLength(255),
@@ -32,8 +32,6 @@ class RawResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('batch_number')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('order_column')
-                    ->numeric(),
 
                 Forms\Components\Select::make('raw_type_id')
                     ->relationship(name: 'rawType', titleAttribute: 'name')

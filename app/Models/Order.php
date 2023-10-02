@@ -23,14 +23,6 @@ class Order extends Model
         'date' => 'datetime:Y-m-d',
     ];
 
-    /**
-     * The "booted" method of the model.
-     */
-    protected static function booted(): void
-    {
-        static::creating(function (self $order) {
-        });
-    }
 
     public function client()
     {

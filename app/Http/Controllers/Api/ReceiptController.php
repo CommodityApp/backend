@@ -12,6 +12,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ReceiptController extends Controller
 {
+
+    public function __construct(public ReceiptService $receiptService)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +33,7 @@ class ReceiptController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateReceiptRequest $request, ReceiptService $receiptService)
+    public function store(CreateReceiptRequest $request)
     {
         $data = $request->safe()->only([
             'rate',
@@ -44,7 +48,7 @@ class ReceiptController extends Controller
             'receipt_raws',
         ])['receipt_raws'];
 
-        $receipt = $receiptService->create($data, $receiptRaws);
+        $receipt = $this->receiptService->create($data, $receiptRaws);
 
         return new ReceiptResource($receipt->load('receiptRaws.raw'));
     }
@@ -60,7 +64,7 @@ class ReceiptController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateReceiptRequest $request, Receipt $receipt, ReceiptService $receiptService)
+    public function update(UpdateReceiptRequest $request, Receipt $receipt)
     {
         $data = $request->safe()->only([
             'rate',
@@ -75,7 +79,7 @@ class ReceiptController extends Controller
             'receipt_raws',
         ])['receipt_raws'];
 
-        $receipt = $receiptService->update($receipt, $data, $receiptRaws);
+        $receipt = $this->receiptService->update($receipt, $data, $receiptRaws);
 
         return new ReceiptResource($receipt->load('receiptRaws.raw'));
     }
@@ -85,8 +89,14 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
+        $receipt->receiptRaws()->delete();
         $receipt->delete();
 
         return $receipt->id;
+    }
+
+    public function replicate(Receipt $receipt)
+    {
+        return new ReceiptResource($this->receiptService->replicate($receipt)->load('receiptRaws.raw.lastRawPrice'));
     }
 }

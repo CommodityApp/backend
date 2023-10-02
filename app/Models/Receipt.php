@@ -6,10 +6,11 @@ use App\Traits\Sortable\SortableTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Receipt extends Model
 {
-    use HasFactory, SortableTrait;
+    use HasFactory, SortableTrait, SoftDeletes;
 
     /**
      * The attributes that should be cast.
@@ -36,5 +37,10 @@ class Receipt extends Model
         return Attribute::make(
             get: fn () => $this->receiptRaws->sum('ratio'),
         );
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

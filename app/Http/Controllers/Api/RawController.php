@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Raw\CreateRawRequest;
+use App\Http\Requests\Api\Raw\UpdateRawRequest;
 use App\Http\Resources\Api\RawResource;
 use App\Models\Raw;
+use App\Services\RawService;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RawController extends Controller
 {
+    public function __construct(public RawService $rawService)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,32 +33,58 @@ class RawController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRawRequest $request)
     {
-        //
+        $raw = $this->rawService->create($request->safe()->only([
+            'code',
+            'name',
+            'unit',
+            'concentration',
+            'batch_number',
+            'producer_id',
+            'country_id',
+            'raw_type_id',
+            'bunker_id',
+        ]));
+
+        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Raw $raw)
     {
-        //
+        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRawRequest $request, Raw $raw)
     {
-        //
+        $raw = $this->rawService->update($raw, $request->safe()->only([
+            'code',
+            'name',
+            'unit',
+            'concentration',
+            'batch_number',
+            'producer_id',
+            'country_id',
+            'raw_type_id',
+            'bunker_id',
+        ]));
+
+        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Raw $raw)
     {
-        //
+        $raw = $this->rawService->delete($raw);
+
+        return $raw->id;
     }
 }

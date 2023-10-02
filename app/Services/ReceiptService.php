@@ -35,4 +35,27 @@ class ReceiptService
 
         return $receipt;
     }
+
+    public function replicate(Receipt $receipt)
+    {
+        $data = $receipt->attributesToArray();
+
+        unset($data['code']);
+        unset($data['id']);
+
+        $receiptRaws = [];
+
+        foreach ($receipt->receiptRaws as $receiptRaw) {
+            $receiptRaws[] = ['raw_id' => $receiptRaw->raw_id, 'ratio' => $receiptRaw->ratio];
+        }
+
+        return $this->create($data,  $receiptRaws);
+    }
+
+    public function delete(Receipt $receipt)
+    {
+        //soft delete
+        $receipt->update(['code' => null]);
+        $receipt->delete();
+    }
 }

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', ClientController::class);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('receipts', ReceiptController::class);
+    Route::apiResource('raws', RawController::class);
+    Route::post('receipts/{receipt}/replicate', [ReceiptController::class, 'replicate']);
     Route::get('/countries', [CountryController::class, 'index']);
-    Route::get('/raws', [RawController::class, 'index']);
 });

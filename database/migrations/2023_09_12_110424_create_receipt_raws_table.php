@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('receipt_raws', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('ratio', 14, 4)->default(0);
-            $table->unsignedInteger('order_column');
-            $table->timestamps();
+        Schema::withoutForeignKeyConstraints(function () {
+            Schema::create('receipt_raws', function (Blueprint $table) {
+                $table->id();
+                $table->decimal('ratio', 14, 4)->default(0);
+                $table->unsignedInteger('order_column');
+                $table->timestamps();
 
-            $table->unsignedBigInteger('raw_id');
-            $table->unsignedBigInteger('receipt_id');
+                $table->foreignId('raw_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+                $table->foreignId('receipt_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 
-            $table->unique(['raw_id', 'receipt_id']);
+                $table->unique(['raw_id', 'receipt_id']);
+            });
         });
     }
 
