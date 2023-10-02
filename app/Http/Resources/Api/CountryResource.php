@@ -14,6 +14,14 @@ class CountryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'country_code' => $this->country_code,
+            'iso_3166_2' => $this->iso_3166_2,
+            'iso_3166_3' => $this->iso_3166_3,
+            'created_at' => $this->created_at->formattedCustom(),
+            'updated_at' => $this->updated_at->formattedCustom(),
+        ];
     }
 }

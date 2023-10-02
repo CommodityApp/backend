@@ -6,8 +6,10 @@ use App\Http\Controllers\Api\BunkerController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\CountryController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProducerController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RawController;
+use App\Http\Controllers\Api\RawTypeController;
 use App\Http\Controllers\Api\ReceiptController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +29,13 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile']);
     Route::apiResource('animal-types', AnimalTypeController::class);
+    Route::apiResource('raw-types', RawTypeController::class);
     Route::apiResource('bunkers', BunkerController::class);
     Route::apiResource('clients', ClientController::class);
     Route::apiResource('orders', OrderController::class);
     Route::apiResource('receipts', ReceiptController::class);
     Route::apiResource('raws', RawController::class);
+    Route::apiResource('producers', ProducerController::class);
     Route::post('receipts/{receipt}/replicate', [ReceiptController::class, 'replicate']);
     Route::get('/countries', [CountryController::class, 'index']);
 });
