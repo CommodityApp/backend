@@ -79,7 +79,7 @@ class AdminPanelProvider extends PanelProvider
                         ...BunkerResource::getNavigationItems(),
                         ...ClientResource::getNavigationItems(),
                     ])->collapsible(false),
-                    NavigationGroup::make('Административное управлени')->items([
+                    NavigationGroup::make('Административное управление')->items([
                         ...UserResource::getNavigationItems(),
                         ...RoleResource::getNavigationItems(),
                     ])->collapsible(false),
