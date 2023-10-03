@@ -24,7 +24,7 @@ class UpdateRawRequest extends FormRequest
     {
         return [
             'code' => ['present', 'nullable', Rule::unique('raws', 'code')->ignore($this->raw->id)],
-            'name' => 'required|nullable|string|max:255',
+            'name' => 'required|string|max:255',
             'unit' => 'present|nullable|max:255',
             'concentration' => ['present', 'nullable', 'numeric', 'min:0'],
             'batch_number' => 'present|nullable|max:255',
