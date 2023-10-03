@@ -16,7 +16,7 @@ class ProducerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $modelLabel = 'Производители';
+    protected static ?string $modelLabel = 'Производитель';
 
     protected static ?string $pluralModelLabel = 'Производители';
 
