@@ -23,7 +23,6 @@ class Order extends Model
         'date' => 'datetime:Y-m-d',
     ];
 
-
     public function client()
     {
         return $this->belongsTo(Client::class);
@@ -31,7 +30,7 @@ class Order extends Model
 
     public function receipt()
     {
-        return $this->belongsTo(Receipt::class);
+        return $this->belongsTo(Receipt::class)->withTrashed();
     }
 
     public function orderCalculatedRaws()
