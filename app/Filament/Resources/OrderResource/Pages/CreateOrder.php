@@ -5,7 +5,6 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource;
 use App\Models\AnimalType;
 use App\Services\OrderService;
-use Closure;
 use Filament\Forms;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -52,17 +51,6 @@ class CreateOrder extends CreateRecord
                     Forms\Components\TextInput::make('amount')
                         ->numeric()
                         ->required(),
-                    // ->rules([
-                    //     function (Get $get) {
-                    //         return function (string $attribute, $value, Closure $fail) use ($get) {
-                    //             $sum = array_sum(array_column($get('batch_inputs'), 'amount'));
-
-                    //             if ($value != floatval($sum)) {
-                    //                 $fail(":attribute should be equal to {$sum}");
-                    //             }
-                    //         };
-                    //     },
-                    // ]),
                 ]),
 
             Forms\Components\Wizard\Step::make('Задание на пр-во')

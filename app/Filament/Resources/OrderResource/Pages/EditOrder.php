@@ -61,7 +61,7 @@ class EditOrder extends EditRecord
                                 $sum = array_sum(array_column($get('batch_inputs'), 'amount'));
 
                                 if ($value != floatval($sum)) {
-                                    $fail(":attribute should be equal to {$sum}");
+                                    $fail("Поле :attribute должен быть равен {$sum}");
                                 }
                             };
                         },
@@ -102,7 +102,6 @@ class EditOrder extends EditRecord
                     ->columnSpanFull(),
             ]);
     }
-
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {

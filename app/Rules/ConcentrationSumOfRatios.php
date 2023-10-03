@@ -40,7 +40,7 @@ class ConcentrationSumOfRatios implements DataAwareRule, ValidationRule
         $sum = array_sum(array_column($this->data['receipt_raws'], 'ratio'));
 
         if ($value != $sum) {
-            $fail("The :attribute should be equal to {$sum}");
+            $fail("Поле :attribute должен быть равен {$sum}");
         }
     }
 }

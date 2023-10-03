@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReceiptResource\Pages;
 use App\Filament\Resources\ReceiptResource\RelationManagers\RawsRelationManager;
 use App\Models\Receipt;
-use App\Services\RawService;
 use App\Services\ReceiptService;
 use Closure;
 use Filament\Forms;
@@ -51,7 +50,7 @@ class ReceiptResource extends Resource
                                 if ($record) {
                                     $sum = $record->receiptRaws()->sum('ratio');
                                     if ($value < $sum) {
-                                        $fail('The :attribute should be greater than total');
+                                        $fail('Поле :attribute должен быть равен '.$sum);
                                     }
                                 }
                             };
@@ -92,6 +91,7 @@ class ReceiptResource extends Resource
                     ->action(
                         function (Receipt $record, ReceiptService $receiptService) {
                             $new = $receiptService->replicate($record);
+
                             return redirect()->route('filament.admin.resources.receipts.edit', $new);
                         }
                     )

@@ -16,9 +16,9 @@ class ProducerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $modelLabel = 'Продюсер';
+    protected static ?string $modelLabel = 'Производители';
 
-    protected static ?string $pluralModelLabel = 'Продюсеры';
+    protected static ?string $pluralModelLabel = 'Производители';
 
     public static function form(Form $form): Form
     {
