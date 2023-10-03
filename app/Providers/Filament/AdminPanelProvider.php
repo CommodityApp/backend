@@ -70,7 +70,7 @@ class AdminPanelProvider extends PanelProvider
                             ->icon('heroicon-o-home')
                             ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
                             ->url(fn (): string => Dashboard::getUrl()),
-                        ...OrderResource::getNavigationItems(),
+                        // ...OrderResource::getNavigationItems(),
                         ...ReceiptResource::getNavigationItems(),
                         ...RawResource::getNavigationItems(),
                         ...RawTypeResource::getNavigationItems(),
