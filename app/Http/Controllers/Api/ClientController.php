@@ -19,7 +19,7 @@ class ClientController extends Controller
             ->allowedFilters('name', 'industry', 'region', 'company')
             ->allowedSorts('id', 'name')
             ->allowedIncludes('country')
-            ->paginate();
+            ->paginate(request()->input('per_page', 15));
 
         return ClientResource::collection($clients);
     }

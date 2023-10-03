@@ -8,7 +8,6 @@ use App\Http\Requests\Api\Raw\UpdateRawRequest;
 use App\Http\Resources\Api\RawResource;
 use App\Models\Raw;
 use App\Services\RawService;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RawController extends Controller
@@ -16,6 +15,7 @@ class RawController extends Controller
     public function __construct(public RawService $rawService)
     {
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +25,7 @@ class RawController extends Controller
             ->allowedFilters('name', 'code', 'unit', 'concentration', 'batch_number')
             ->allowedSorts('id', 'name', 'code')
             ->allowedIncludes('lastRawPrice', 'rawType', 'bunker', 'country', 'rawPrices', 'producer')
-            ->paginate();
+            ->paginate(request()->input('per_page', 15));
 
         return RawResource::collection($receipts);
     }

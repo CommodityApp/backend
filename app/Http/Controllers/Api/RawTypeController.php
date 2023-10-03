@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\RawTypeResource;
 use App\Models\RawType;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RawTypeController extends Controller
@@ -18,9 +17,10 @@ class RawTypeController extends Controller
     {
         $rawTypes = QueryBuilder::for(RawType::class)
             ->allowedFilters('name', 'unit')
-            ->allowedSorts('id', 'name', 'unit');
+            ->allowedSorts('id', 'name', 'unit')
+            ->paginate(request()->input('per_page', 15));
 
-        return RawTypeResource::collection($rawTypes->paginate());
+        return RawTypeResource::collection($rawTypes);
     }
 
     /**

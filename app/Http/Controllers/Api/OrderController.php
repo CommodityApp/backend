@@ -20,7 +20,7 @@ class OrderController extends Controller
             ->allowedFilters('amount', 'error', 'date')
             ->allowedSorts('id', 'amount', 'date')
             ->allowedIncludes('client', 'receipt', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'animalType')
-            ->paginate();
+            ->paginate(request()->input('per_page', 15));
 
         return OrderResource::collection($receipts);
     }

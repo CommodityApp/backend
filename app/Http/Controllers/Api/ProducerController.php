@@ -18,9 +18,10 @@ class ProducerController extends Controller
         $producers = QueryBuilder::for(Producer::class)
             ->allowedFilters('name')
             ->allowedIncludes('country')
-            ->allowedSorts('id', 'name');
+            ->allowedSorts('id', 'name')
+            ->paginate(request()->input('per_page', 15));
 
-        return ProducerResource::collection($producers->paginate());
+        return ProducerResource::collection($producers);
     }
 
     /**
@@ -30,7 +31,7 @@ class ProducerController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'country_id' => 'present|exists:countries,id'
+            'country_id' => 'present|exists:countries,id',
         ]);
 
         $producer = Producer::create($data);
@@ -53,7 +54,7 @@ class ProducerController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'country_id' => 'present|exists:countries,id'
+            'country_id' => 'present|exists:countries,id',
         ]);
 
         $producer->update($data);

@@ -17,9 +17,10 @@ class BunkerController extends Controller
     {
         $bunkers = QueryBuilder::for(Bunker::class)
             ->allowedFilters('name')
-            ->allowedSorts('id', 'name');
+            ->allowedSorts('id', 'name')
+            ->paginate(request()->input('per_page', 15));
 
-        return BunkerResource::collection($bunkers->paginate());
+        return BunkerResource::collection($bunkers);
     }
 
     /**

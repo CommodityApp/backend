@@ -12,10 +12,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ReceiptController extends Controller
 {
-
     public function __construct(public ReceiptService $receiptService)
     {
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +25,7 @@ class ReceiptController extends Controller
             ->allowedFilters('name', 'rate', 'code', 'unit', 'producer_name', 'concentration')
             ->allowedSorts('id', 'name')
             ->allowedIncludes('receiptRaws.raw.lastRawPrice')
-            ->paginate();
+            ->paginate(request()->input('per_page', 15));
 
         return ReceiptResource::collection($receipts);
     }

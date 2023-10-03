@@ -18,7 +18,7 @@ class CountryController extends Controller
         $countries = QueryBuilder::for(Country::class)
             ->allowedFilters('name', 'country_code', 'iso_3166_2', 'iso_3166_3')
             ->allowedSorts('id', 'name')
-            ->paginate();
+            ->paginate(request()->input('per_page', 15));
 
         return CountryResource::collection($countries);
     }
