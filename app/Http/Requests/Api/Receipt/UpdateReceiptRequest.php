@@ -27,8 +27,8 @@ class UpdateReceiptRequest extends FormRequest
             'rate' => 'required|numeric',
             'code' => ['required', Rule::unique('receipts', 'code')->ignore($this->receipt->id)],
             'name' => 'required|string|max:255',
-            'unit' => 'present|max:255',
-            'producer_name' => 'present|max:255',
+            'unit' => 'present|nullable|max:255',
+            'producer_name' => 'present|nullable|max:255',
             'concentration' => ['required', 'numeric', 'min:0', new ConcentrationSumOfRatios],
 
             'receipt_raws' => 'present|array',
