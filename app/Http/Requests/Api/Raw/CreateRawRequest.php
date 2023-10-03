@@ -23,7 +23,7 @@ class CreateRawRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', Rule::unique('receipts', 'code')],
+            'code' => ['required', Rule::unique('raws', 'code')],
             'name' => 'required|string|max:255',
             'unit' => 'present|max:255',
             'concentration' => ['required', 'numeric', 'min:0'],

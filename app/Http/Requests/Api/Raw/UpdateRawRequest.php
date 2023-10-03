@@ -23,7 +23,7 @@ class UpdateRawRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', Rule::unique('receipts', 'code')->ignore($this->raw->id)],
+            'code' => ['required', Rule::unique('raws', 'code')->ignore($this->raw->id)],
             'name' => 'required|string|max:255',
             'unit' => 'present|max:255',
             'concentration' => ['required', 'numeric', 'min:0'],
