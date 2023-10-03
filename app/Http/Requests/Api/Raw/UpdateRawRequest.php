@@ -23,15 +23,15 @@ class UpdateRawRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['present', Rule::unique('raws', 'code')->ignore($this->raw->id)],
-            'name' => 'required|string|max:255',
-            'unit' => 'present|max:255',
-            'concentration' => ['present', 'numeric', 'min:0'],
-            'batch_number' => 'present|max:255',
-            'producer_id' => 'present|exists:producers,id',
-            'country_id' => 'present|exists:countries,id',
-            'raw_type_id' => 'present|exists:raw_types,id',
-            'bunker_id' => 'present|exists:bunkers,id',
+            'code' => ['present', 'nullable', Rule::unique('raws', 'code')->ignore($this->raw->id)],
+            'name' => 'required|nullable|string|max:255',
+            'unit' => 'present|nullable|max:255',
+            'concentration' => ['present', 'nullable', 'numeric', 'min:0'],
+            'batch_number' => 'present|nullable|max:255',
+            'producer_id' => 'present|nullable|exists:producers,id',
+            'country_id' => 'present|nullable|exists:countries,id',
+            'raw_type_id' => 'present|nullable|exists:raw_types,id',
+            'bunker_id' => 'present|nullable|exists:bunkers,id',
         ];
     }
 }
