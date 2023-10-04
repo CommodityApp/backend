@@ -31,6 +31,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('raw_prices');
+        Schema::withoutForeignKeyConstraints(function () {
+            Schema::dropIfExists('raw_prices');
+        });
     }
 };
