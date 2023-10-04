@@ -23,8 +23,8 @@ class UpdateRawRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required', 'string', 'max:255', Rule::unique('raws', 'name')->whereNull('deleted_at')->ignore($this->raw->id)],
             'code' => ['present', 'nullable', Rule::unique('raws', 'code')->ignore($this->raw->id)],
-            'name' => ['required', 'string', 'max:255', Rule::unique('raws', 'name')->ignore($this->raw->id)],
             'unit' => 'present|nullable|max:255',
             'concentration' => ['present', 'nullable', 'numeric', 'min:0'],
             'batch_number' => 'present|nullable|max:255',

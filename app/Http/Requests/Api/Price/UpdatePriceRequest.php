@@ -23,7 +23,7 @@ class UpdatePriceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'max:255', Rule::unique('prices', 'name')->whereNull('deleted_at')->ignore($this->price->id)],
             'code' => ['present', 'nullable', Rule::unique('prices', 'code')->ignore($this->price->id)],
             'price_raws' => 'present|array',
             'price_raws.*.raw_id' => 'required|distinct|exists:raws,id',

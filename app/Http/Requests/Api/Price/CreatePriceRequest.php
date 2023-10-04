@@ -23,7 +23,7 @@ class CreatePriceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'max:255', Rule::unique('prices', 'name')->whereNull('deleted_at')],
             'code' => ['present', 'nullable', Rule::unique('prices', 'code')],
 
             'price_raws' => 'present|array',

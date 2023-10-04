@@ -24,7 +24,7 @@ class CreateRawRequest extends FormRequest
     {
         return [
             'code' => ['present', 'nullable', Rule::unique('raws', 'code')],
-            'name' => ['required', 'string', 'max:255', Rule::unique('raws', 'name')],
+            'name' => ['required', 'string', 'max:255', Rule::unique('raws', 'name')->whereNull('deleted_at')],
             'unit' => 'present|nullable|max:255',
             'concentration' => ['present', 'nullable', 'numeric', 'min:0'],
             'batch_number' => 'present|nullable|max:255',
