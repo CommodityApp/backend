@@ -24,7 +24,7 @@ class UpdateReceiptRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'numeric', Rule::unique('receipts', 'name')->whereNull('deleted_at')->ignore($this->receipt->id)],
+            'name' => ['required', 'max:255', Rule::unique('receipts', 'name')->whereNull('deleted_at')->ignore($this->receipt->id)],
             'code' => ['required', Rule::unique('receipts', 'code')->ignore($this->receipt->id)],
             'name' => 'required|numeric',
             'unit' => 'present|nullable|max:255',

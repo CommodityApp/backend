@@ -24,7 +24,7 @@ class CreateReceiptRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'numeric', Rule::unique('receipts', 'name')->whereNull('deleted_at')],
+            'name' => ['required', 'max:255', Rule::unique('receipts', 'name')->whereNull('deleted_at')],
             'code' => ['required', Rule::unique('receipts', 'code')],
             'rate' => 'required|numeric',
             'unit' => 'present|nullable|max:255',
