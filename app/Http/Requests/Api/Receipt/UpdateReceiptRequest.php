@@ -26,7 +26,7 @@ class UpdateReceiptRequest extends FormRequest
         return [
             'name' => ['required', 'max:255', Rule::unique('receipts', 'name')->whereNull('deleted_at')->ignore($this->receipt->id)],
             'code' => ['required', Rule::unique('receipts', 'code')->ignore($this->receipt->id)],
-            'name' => 'required|numeric',
+            'rate' => 'required|numeric',
             'unit' => 'present|nullable|max:255',
             'producer_name' => 'present|nullable|max:255',
             'concentration' => ['required', 'numeric', 'min:0', new ConcentrationSumOfRatios],
