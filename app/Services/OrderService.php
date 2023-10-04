@@ -30,6 +30,10 @@ class OrderService
                     totalRatio: $totalRatio,
                     error: $data['error']
                 ),
+
+                'ratio' => $receiptRaw->ratio,
+                'price' => $receiptRaw->raw->lastRawPrice?->price,
+                'raw_price_id' => $receiptRaw->raw->last_raw_price_id,
             ];
         }
 
@@ -37,6 +41,7 @@ class OrderService
         $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'), $data['batch_inputs']);
 
         $orderCalculatedRaws = array_map(fn ($entry): array => [
+            ...$entry,
             'calculated_amount' => json_encode($entry['calculated_amount']),
             'calculated_amount_with_error' => json_encode($entry['calculated_amount_with_error']),
         ], $orderCalculatedRaws);
@@ -73,6 +78,10 @@ class OrderService
                     totalRatio: $totalRatio,
                     error: $data['error']
                 ),
+
+                'ratio' => $receiptRaw->ratio,
+                'price' => $receiptRaw->raw->lastRawPrice?->price,
+                'raw_price_id' => $receiptRaw->raw->last_raw_price_id,
             ];
         }
 
@@ -80,6 +89,7 @@ class OrderService
         $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'), $data['batch_inputs']);
 
         $orderCalculatedRaws = array_map(fn ($entry): array => [
+            ...$entry,
             'calculated_amount' => json_encode($entry['calculated_amount']),
             'calculated_amount_with_error' => json_encode($entry['calculated_amount_with_error']),
         ], $orderCalculatedRaws);

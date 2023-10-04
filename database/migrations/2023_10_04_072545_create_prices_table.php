@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('raw_prices', function (Blueprint $table) {
+        Schema::create('prices', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('code')->nullable();
+            $table->string('code')->nullable()->unique();
             $table->string('unit')->nullable();
-            $table->decimal('price', 14, 4);
+            $table->softDeletes();
             $table->timestamps();
-            $table->unsignedBigInteger('raw_id')->nullable();
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('raw_prices');
+        Schema::dropIfExists('prices');
     }
 };

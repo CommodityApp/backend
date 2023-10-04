@@ -6,6 +6,7 @@ use App\Filament\Resources\AnimalTypeResource;
 use App\Filament\Resources\BunkerResource;
 use App\Filament\Resources\ClientResource;
 use App\Filament\Resources\OrderResource;
+use App\Filament\Resources\PriceResource;
 use App\Filament\Resources\ProducerResource;
 use App\Filament\Resources\RawResource;
 use App\Filament\Resources\RawTypeResource;
@@ -73,6 +74,7 @@ class AdminPanelProvider extends PanelProvider
                         // ...OrderResource::getNavigationItems(),
                         ...ReceiptResource::getNavigationItems(),
                         ...RawResource::getNavigationItems(),
+                        ...PriceResource::getNavigationItems(),
                         ...RawTypeResource::getNavigationItems(),
                         ...AnimalTypeResource::getNavigationItems(),
                         ...ProducerResource::getNavigationItems(),

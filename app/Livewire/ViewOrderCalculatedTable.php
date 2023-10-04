@@ -34,7 +34,7 @@ class ViewOrderCalculatedTable extends Component implements HasForms, HasTable
             ->query(OrderCalculatedRaw::whereOrderId($this->record->id))
             ->columns([
                 TextColumn::make('receiptRaw.raw.name'),
-                TextColumn::make('receiptRaw.ratio'),
+                TextColumn::make('ratio'),
                 TextColumn::make('calculated_amount.'.$this->index),
                 TextColumn::make('calculated_amount_with_error.'.$this->index),
             ])

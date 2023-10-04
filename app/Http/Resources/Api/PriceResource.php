@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RawPriceResource extends JsonResource
+class PriceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,11 @@ class RawPriceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'price' => $this->price,
-            'raw' => new RawResource($this->whenLoaded('raw')),
+            'name' => $this->name,
+            'code' => $this->code,
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
+            'price_raws' => RawPriceResource::collection($this->whenLoaded('priceRaws')),
         ];
     }
 }

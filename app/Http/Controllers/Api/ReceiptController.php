@@ -89,8 +89,7 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
-        $receipt->receiptRaws()->delete();
-        $receipt->delete();
+        $receipt = $this->receiptService->delete($receipt);
 
         return $receipt->id;
     }

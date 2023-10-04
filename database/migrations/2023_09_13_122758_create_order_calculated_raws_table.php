@@ -18,6 +18,9 @@ return new class extends Migration
                 $table->json('calculated_amount_with_error');
                 $table->timestamps();
 
+                $table->decimal('ratio', 14, 4)->nullable();
+                $table->decimal('price', 14, 4)->nullable();
+                $table->foreignId('raw_price_id')->nullable()->constrained()->nullOnDelete();
                 $table->foreignId('order_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
                 $table->foreignId('receipt_raw_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
 

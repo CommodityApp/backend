@@ -49,13 +49,15 @@ class ReceiptService
             $receiptRaws[] = ['raw_id' => $receiptRaw->raw_id, 'ratio' => $receiptRaw->ratio];
         }
 
-        return $this->create($data,  $receiptRaws);
+        return $this->create($data, $receiptRaws);
     }
 
-    public function delete(Receipt $receipt)
+    public function delete(Receipt $receipt): Receipt
     {
         //soft delete
         $receipt->update(['code' => null]);
         $receipt->delete();
+
+        return $receipt;
     }
 }
