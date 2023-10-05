@@ -18,6 +18,7 @@ class PriceResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
+            'unit' => $this->unit,
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
             'price_raws' => RawPriceResource::collection($this->whenLoaded('priceRaws')),
