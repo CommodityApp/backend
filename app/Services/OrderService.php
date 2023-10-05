@@ -37,6 +37,8 @@ class OrderService
             ];
         }
 
+        $data['price'] = round(floatval(array_sum(array_filter(array_column($orderCalculatedRaws, 'price')))), 2);
+        $data['ratio'] = round(floatval(array_sum(array_filter(array_column($orderCalculatedRaws, 'ratio')))), 4);
         $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'), $data['batch_inputs']);
         $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'), $data['batch_inputs']);
 
@@ -85,6 +87,8 @@ class OrderService
             ];
         }
 
+        $data['price'] = round(floatval(array_sum(array_filter(array_column($orderCalculatedRaws, 'price')))), 2);
+        $data['ratio'] = round(floatval(array_sum(array_filter(array_column($orderCalculatedRaws, 'ratio')))), 4);
         $data['calculated_amount'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount'), $data['batch_inputs']);
         $data['calculated_amount_with_error'] = $this->sumArray(array_column($orderCalculatedRaws, 'calculated_amount_with_error'), $data['batch_inputs']);
 

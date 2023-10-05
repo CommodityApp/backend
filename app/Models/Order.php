@@ -16,6 +16,8 @@ class Order extends Model
      */
     protected $casts = [
         'amount' => 'integer',
+        'price' => 'decimal:1',
+        'rati' => 'decimal:1',
         'error' => 'decimal:4',
         'batch_inputs' => 'array',
         'calculated_amount' => 'array',

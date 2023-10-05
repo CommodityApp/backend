@@ -15,6 +15,9 @@ class OrderCalculatedRaw extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'price' => 'decimal:1',
+        'ratio' => 'decimal:4',
+
         'calculated_amount' => 'array',
         'calculated_amount_with_error' => 'array',
     ];
@@ -23,5 +26,4 @@ class OrderCalculatedRaw extends Model
     {
         return $this->belongsTo(ReceiptRaw::class);
     }
-
 }

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->datetime('date')->nullable();
             $table->decimal('amount', 14, 4);
+            $table->decimal('price', 14, 4)->default(0);
+            $table->decimal('ratio', 14, 4)->default(0);
             $table->decimal('error', 12, 4)->default(1);
             $table->integer('batch_quantity');
             $table->json('batch_inputs');

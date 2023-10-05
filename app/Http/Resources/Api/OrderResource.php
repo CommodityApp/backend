@@ -18,6 +18,8 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'date' => $this->date?->formattedCustom('Y-m-d'),
             'amount' => $this->amount,
+            'price' => $this->price,
+            'ratio' => $this->ratio,
             'error' => $this->error,
             'batch_quantity' => $this->batch_quantity,
             'batch_inputs' => $this->batch_inputs,

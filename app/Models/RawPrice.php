@@ -11,6 +11,15 @@ class RawPrice extends Model
     use HasFactory, SortableTrait;
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'price' => 'decimal:2',
+    ];
+
+    /**
      * The "booted" method of the model.
      */
     protected static function booted(): void
