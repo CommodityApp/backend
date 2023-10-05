@@ -35,6 +35,7 @@ class ViewOrderCalculatedTable extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('receiptRaw.raw.name'),
                 TextColumn::make('ratio'),
+                TextColumn::make('price')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('calculated_amount.'.$this->index),
                 TextColumn::make('calculated_amount_with_error.'.$this->index),
             ])
