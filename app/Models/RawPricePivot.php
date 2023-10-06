@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class RawPricePivot extends Pivot
 {
+    public $incrementing = true;
+
     protected static function booted(): void
     {
         static::created(function (self $rawPrice) {
