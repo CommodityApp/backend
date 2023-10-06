@@ -55,7 +55,7 @@ class RawController extends Controller
      */
     public function show(Raw $raw)
     {
-        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer'));
+        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer', 'lastRawPrice'));
     }
 
     /**
