@@ -24,7 +24,7 @@ class ReceiptController extends Controller
         $receipts = QueryBuilder::for(Receipt::class)
             ->allowedFilters('name', 'rate', 'code', 'unit', 'producer_name', 'concentration')
             ->allowedSorts('id', 'name')
-            ->allowedIncludes('receiptRaws.raw.lastRawPrice')
+            ->allowedIncludes('receiptRaws.raw.lastRawPrice', 'animalType')
             ->paginate(request()->input('per_page', 15));
 
         return ReceiptResource::collection($receipts);
@@ -50,7 +50,7 @@ class ReceiptController extends Controller
 
         $receipt = $this->receiptService->create($data, $receiptRaws);
 
-        return new ReceiptResource($receipt->load('receiptRaws.raw'));
+        return new ReceiptResource($receipt->load('receiptRaws.raw', 'animalType'));
     }
 
     /**
@@ -58,7 +58,7 @@ class ReceiptController extends Controller
      */
     public function show(Receipt $receipt)
     {
-        return new ReceiptResource($receipt->load('receiptRaws.raw.lastRawPrice'));
+        return new ReceiptResource($receipt->load('receiptRaws.raw.lastRawPrice', 'animalType'));
     }
 
     /**
@@ -81,7 +81,7 @@ class ReceiptController extends Controller
 
         $receipt = $this->receiptService->update($receipt, $data, $receiptRaws);
 
-        return new ReceiptResource($receipt->load('receiptRaws.raw'));
+        return new ReceiptResource($receipt->load('receiptRaws.raw', 'animalType'));
     }
 
     /**
@@ -96,6 +96,6 @@ class ReceiptController extends Controller
 
     public function replicate(Receipt $receipt)
     {
-        return new ReceiptResource($this->receiptService->replicate($receipt)->load('receiptRaws.raw.lastRawPrice'));
+        return new ReceiptResource($this->receiptService->replicate($receipt)->load('receiptRaws.raw.lastRawPrice', 'animalType'));
     }
 }

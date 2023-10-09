@@ -24,7 +24,7 @@ class RationController extends Controller
         $rations = QueryBuilder::for(Ration::class)
             ->allowedFilters('name', 'rate', 'code', 'unit', 'producer_name', 'concentration')
             ->allowedSorts('id', 'name')
-            ->allowedIncludes('rationRaws.raw.lastRawPrice')
+            ->allowedIncludes('rationRaws.raw.lastRawPrice', 'animalType')
             ->paginate(request()->input('per_page', 15));
 
         return RationResource::collection($rations);
@@ -50,7 +50,7 @@ class RationController extends Controller
 
         $ration = $this->rationService->create($data, $rationRaws);
 
-        return new RationResource($ration->load('rationRaws.raw'));
+        return new RationResource($ration->load('rationRaws.raw', 'animalType'));
     }
 
     /**
@@ -58,7 +58,7 @@ class RationController extends Controller
      */
     public function show(Ration $ration)
     {
-        return new RationResource($ration->load('rationRaws.raw.lastRawPrice'));
+        return new RationResource($ration->load('rationRaws.raw.lastRawPrice', 'animalType'));
     }
 
     /**
@@ -81,7 +81,7 @@ class RationController extends Controller
 
         $ration = $this->rationService->update($ration, $data, $rationRaws);
 
-        return new RationResource($ration->load('rationRaws.raw'));
+        return new RationResource($ration->load('rationRaws.raw', 'animalType'));
     }
 
     /**
@@ -96,6 +96,6 @@ class RationController extends Controller
 
     public function replicate(Ration $ration)
     {
-        return new RationResource($this->rationService->replicate($ration)->load('rationRaws.raw.lastRawPrice'));
+        return new RationResource($this->rationService->replicate($ration)->load('rationRaws.raw.lastRawPrice', 'animalType'));
     }
 }
