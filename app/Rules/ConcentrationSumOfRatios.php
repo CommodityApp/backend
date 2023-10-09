@@ -8,6 +8,10 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class ConcentrationSumOfRatios implements DataAwareRule, ValidationRule
 {
+    public function __construct(public string $arrayKey = 'receipt_raws')
+    {
+    }
+
     /**
      * All of the data under validation.
      *
@@ -37,7 +41,7 @@ class ConcentrationSumOfRatios implements DataAwareRule, ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $sum = round(array_sum(array_column($this->data['receipt_raws'], 'ratio')), 2);
+        $sum = round(array_sum(array_column($this->data[$this->arrayKey], 'ratio')), 2);
 
         if ($value != $sum) {
             $fail("Поле :attribute должен быть равен {$sum}");

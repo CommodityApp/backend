@@ -8,6 +8,7 @@ use App\Filament\Resources\ClientResource;
 use App\Filament\Resources\OrderResource;
 use App\Filament\Resources\PriceResource;
 use App\Filament\Resources\ProducerResource;
+use App\Filament\Resources\RationResource;
 use App\Filament\Resources\RawResource;
 use App\Filament\Resources\RawTypeResource;
 use App\Filament\Resources\ReceiptResource;
@@ -73,6 +74,7 @@ class AdminPanelProvider extends PanelProvider
                             ->url(fn (): string => Dashboard::getUrl()),
                         // ...OrderResource::getNavigationItems(),
                         ...ReceiptResource::getNavigationItems(),
+                        ...RationResource::getNavigationItems(),
                         ...RawResource::getNavigationItems(),
                         ...PriceResource::getNavigationItems(),
                         ...RawTypeResource::getNavigationItems(),

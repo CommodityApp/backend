@@ -48,7 +48,6 @@ class ViewOrderCalculatedPage extends Page implements HasForms, HasInfolists
                 Components\TextEntry::make('date'),
                 Components\TextEntry::make('client.name'),
                 Components\TextEntry::make('receipt.name'),
-                Components\TextEntry::make('animalType.name'),
             ])->columns(3);
     }
 
@@ -60,7 +59,7 @@ class ViewOrderCalculatedPage extends Page implements HasForms, HasInfolists
                 ->color('success')
                 ->icon('heroicon-s-folder-arrow-down')
                 ->action(function (Model $record) {
-                  
+
                 }),
         ];
     }

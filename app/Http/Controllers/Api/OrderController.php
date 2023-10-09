@@ -19,7 +19,7 @@ class OrderController extends Controller
         $receipts = QueryBuilder::for(Order::class)
             ->allowedFilters('amount', 'error', 'date')
             ->allowedSorts('id', 'amount', 'date')
-            ->allowedIncludes('client', 'receipt', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'animalType')
+            ->allowedIncludes('client', 'receipt', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice')
             ->paginate(request()->input('per_page', 15));
 
         return OrderResource::collection($receipts);
@@ -36,7 +36,6 @@ class OrderController extends Controller
             'batch_quantity' => 'required|numeric|min:1|max:30',
             'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
             'batch_inputs.*' => 'required|numeric',
-            'animal_type_id' => 'required|exists:animal_types,id',
             'amount' => 'required|numeric|size:'.array_sum($request->input('batch_inputs', [])),
             'error' => 'required|numeric',
             'date' => 'required|date',
@@ -54,7 +53,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'animalType', 'receipt', 'client'));
+        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'receipt', 'client'));
     }
 
     /**
@@ -68,7 +67,6 @@ class OrderController extends Controller
             'batch_quantity' => 'required|numeric|min:1|max:30',
             'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
             'batch_inputs.*' => 'required|numeric',
-            'animal_type_id' => 'required|exists:animal_types,id',
             'amount' => 'required|numeric|size:'.array_sum($request->input('batch_inputs', [])),
             'error' => 'required|numeric',
             'date' => 'required|date',

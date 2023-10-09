@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReceiptResource extends JsonResource
+class RationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -26,7 +26,7 @@ class ReceiptResource extends JsonResource
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
             'deleted_at' => $this->deleted_at,
-            'receipt_raws' => ReceiptRawResource::collection($this->whenLoaded('receiptRaws')),
+            'ration_raws' => RationRawResource::collection($this->whenLoaded('rationRaws')),
             'animal_type' => new AnimalTypeResource($this->whenLoaded('animalType')),
         ];
     }

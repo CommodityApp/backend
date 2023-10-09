@@ -4,10 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -21,7 +17,6 @@ class OrderResource extends Resource
     protected static ?string $modelLabel = 'Заказ';
 
     protected static ?string $pluralModelLabel = 'Заказы';
-
 
     public static function table(Table $table): Table
     {
@@ -50,9 +45,6 @@ class OrderResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('receipt.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('animalType.name')
                     ->numeric()
                     ->sortable(),
             ])

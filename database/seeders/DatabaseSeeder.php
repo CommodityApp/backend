@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AnimalSeeder::class);
         $this->call(RawSeeder::class);
         $this->call(ReceiptSeeder::class);
+        $this->call(RationSeeder::class);
     }
 }

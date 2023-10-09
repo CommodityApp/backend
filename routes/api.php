@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('clients', Api\ClientController::class);
     Route::apiResource('orders', Api\OrderController::class);
     Route::apiResource('receipts', Api\ReceiptController::class);
+    Route::apiResource('rations', Api\RationController::class);
     Route::apiResource('raws', Api\RawController::class);
     Route::apiResource('producers', Api\ProducerController::class);
     Route::apiResource('prices', Api\PriceController::class);

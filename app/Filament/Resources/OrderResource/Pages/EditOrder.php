@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
-use App\Models\AnimalType;
 use App\Services\OrderService;
 use Closure;
 use Filament\Actions;
@@ -42,12 +41,6 @@ class EditOrder extends EditRecord
 
                 Forms\Components\Select::make('receipt_id')
                     ->relationship(name: 'receipt', titleAttribute: 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
-
-                Forms\Components\Select::make('animal_type_id')
-                    ->options(AnimalType::treeView())
                     ->searchable()
                     ->preload()
                     ->required(),

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Receipt extends Model
 {
-    use HasFactory, SortableTrait, SoftDeletes;
+    use HasFactory, SoftDeletes, SortableTrait;
 
     /**
      * The attributes that should be cast.
@@ -42,5 +42,10 @@ class Receipt extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function animalType()
+    {
+        return $this->belongsTo(AnimalType::class);
     }
 }

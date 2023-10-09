@@ -30,6 +30,7 @@ class UpdateReceiptRequest extends FormRequest
             'unit' => 'present|nullable|max:255',
             'producer_name' => 'present|nullable|max:255',
             'concentration' => ['required', 'numeric', 'min:0', new ConcentrationSumOfRatios],
+            'animal_type_id' => 'present|nullable|exists:animal_types,id',
 
             'receipt_raws' => 'present|array',
             'receipt_raws.*.raw_id' => 'required|distinct|exists:raws,id',

@@ -2,27 +2,33 @@
 
 namespace Database\Seeders;
 
+use App\Models\AnimalType;
 use App\Models\Raw;
-use App\Models\Receipt;
+use App\Services\ReceiptService;
 use Illuminate\Database\Seeder;
 
 class ReceiptSeeder extends Seeder
 {
+    public function __construct(public ReceiptService $receiptService)
+    {
+    }
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $receipt = Receipt::create([
+        $data = [
             'code' => 'R#1',
             'name' => 'Рецепт №1',
             'rate' => '2',
-            'concentration' => '40',
+            'concentration' => '20',
             'unit' => 'кг',
             'producer_name' => 'Узб',
-        ]);
+            'animal_type_id' => AnimalType::whereNotNull('parent_id')->get()->random()?->id,
+        ];
 
-        $raws = [
+        $receiptRaws = [
             ['name' => 'МКФ', 'ratio' => 4.0],
             ['name' => 'Известняк', 'ratio' => 5.655],
             ['name' => 'Метионин', 'ratio' => 1.5],
@@ -40,12 +46,11 @@ class ReceiptSeeder extends Seeder
             ['name' => 'Холин 70%', 'ratio' => 0.400],
         ];
 
-        foreach ($raws as $data) {
-            $raw = Raw::whereName($data['name'])->firstOrFail();
-            $receipt->receiptRaws()->create([
-                'ratio' => $data['ratio'] ?? 0,
-                'raw_id' => $raw->id,
-            ]);
-        }
+        $receiptRaws = array_map(fn ($entry): array => [
+            'raw_id' => Raw::firstOrCreate(['name' => $entry['name']])->id,
+            'ratio' => $entry['ratio'] ?? 0,
+        ], $receiptRaws);
+
+        $this->receiptService->create($data, $receiptRaws);
     }
 }

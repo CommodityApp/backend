@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
-use App\Models\AnimalType;
 use App\Services\OrderService;
 use Filament\Forms;
 use Filament\Forms\Get;
@@ -55,12 +54,6 @@ class CreateOrder extends CreateRecord
 
             Forms\Components\Wizard\Step::make('Задание на пр-во')
                 ->schema([
-                    Forms\Components\Select::make('animal_type_id')
-                        ->options(AnimalType::treeView())
-                        ->searchable()
-                        ->preload()
-                        ->required(),
-
                     Forms\Components\TextInput::make('error')
                         ->numeric()
                         ->inputMode('decimal')
