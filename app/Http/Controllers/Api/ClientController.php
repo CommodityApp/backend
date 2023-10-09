@@ -16,7 +16,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = QueryBuilder::for(Client::class)
-            ->allowedFilters('name', 'industry', 'region', 'company')
+            ->allowedFilters('name', 'industry', 'region', 'company', 'email', 'phone')
             ->allowedSorts('id', 'name')
             ->allowedIncludes('country')
             ->paginate(request()->input('per_page', 15));
@@ -35,6 +35,8 @@ class ClientController extends Controller
             'region' => 'nullable|string',
             'company' => 'nullable|string',
             'country_id' => 'exists:countries,id',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|max:255',
         ]);
 
         $client = Client::create($data);
@@ -61,6 +63,8 @@ class ClientController extends Controller
             'region' => 'nullable|string',
             'company' => 'nullable|string',
             'country_id' => 'exists:countries,id',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|max:255',
         ]);
 
         $client->update($data);
