@@ -19,7 +19,7 @@ class OrderController extends Controller
         $receipts = QueryBuilder::for(Order::class)
             ->allowedFilters('amount', 'error', 'date')
             ->allowedSorts('id', 'amount', 'date')
-            ->allowedIncludes('client', 'receipt', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice')
+            ->allowedIncludes('client', 'receipt.animalType', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice')
             ->paginate(request()->input('per_page', 15));
 
         return OrderResource::collection($receipts);
@@ -53,7 +53,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'receipt', 'client'));
+        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'receipt.animalType', 'client'));
     }
 
     /**
