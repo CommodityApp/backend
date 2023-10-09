@@ -38,6 +38,7 @@ class PriceController extends Controller
         $data = $request->safe()->only([
             'code',
             'name',
+            'unit'
         ]);
 
         $priceRaws = $request->safe()->only([
@@ -65,6 +66,7 @@ class PriceController extends Controller
         $data = $request->safe()->only([
             'code',
             'name',
+            'unit'
         ]);
 
         $priceRaws = $request->safe()->only([
