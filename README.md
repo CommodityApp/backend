@@ -3,8 +3,8 @@
 ### About
 
 -   Filament (v3) Admin panel with Raw, Receipt, Price, User, Order and many other resources to manage the commodity system
--   REST API for all the resources: Validation Requests, Services, Controllers, Traits, Policies and etc.
--   Used 3rd pary libraries like: spatie/larave-activitylog, spatie/laravel-permission, spatie/laravel-query-builder and livewire components
+-   REST API for all the resources, Validation Requests, Services, Controllers, Traits, Policies and etc.
+-   Used 3rd party libraries like: spatie/larave-activitylog, spatie/laravel-permission, spatie/laravel-query-builder and livewire components
 
 ### Server Requirements
 
