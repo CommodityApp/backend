@@ -20,7 +20,6 @@ class RawTypeResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Тип сырья';
 
-
     public static function form(Form $form): Form
     {
         return $form
@@ -45,6 +44,14 @@ class RawTypeResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('unit')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
                     ->sortable()
                     ->searchable(),
             ])

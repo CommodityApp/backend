@@ -18,6 +18,7 @@ class RawTypeController extends Controller
         $rawTypes = QueryBuilder::for(RawType::class)
             ->allowedFilters('name', 'unit')
             ->allowedSorts('id', 'name', 'unit')
+            ->allowedIncludes('firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return RawTypeResource::collection($rawTypes);
@@ -43,7 +44,7 @@ class RawTypeController extends Controller
      */
     public function show(RawType $rawType)
     {
-        return new RawTypeResource($rawType);
+        return new RawTypeResource($rawType->load('activities.causer'));
     }
 
     /**

@@ -47,6 +47,10 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('receipt.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

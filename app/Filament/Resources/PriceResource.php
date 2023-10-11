@@ -46,13 +46,14 @@ class PriceResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('code')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

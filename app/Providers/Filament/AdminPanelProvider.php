@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\ActivityResource;
 use App\Filament\Resources\AnimalTypeResource;
 use App\Filament\Resources\BunkerResource;
 use App\Filament\Resources\ClientResource;
@@ -86,6 +87,7 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('Административное управление')->items([
                         ...UserResource::getNavigationItems(),
                         ...RoleResource::getNavigationItems(),
+                        ...ActivityResource::getNavigationItems(),
                     ])->collapsible(false),
                 ]);
             });

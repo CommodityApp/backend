@@ -18,6 +18,7 @@ class BunkerController extends Controller
         $bunkers = QueryBuilder::for(Bunker::class)
             ->allowedFilters('name')
             ->allowedSorts('id', 'name')
+            ->allowedIncludes('firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return BunkerResource::collection($bunkers);
@@ -42,7 +43,7 @@ class BunkerController extends Controller
      */
     public function show(Bunker $bunker)
     {
-        return new BunkerResource($bunker);
+        return new BunkerResource($bunker->load('activities.causer'));
     }
 
     /**

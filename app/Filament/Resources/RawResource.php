@@ -84,6 +84,15 @@ class RawResource extends Resource
                 Tables\Columns\TextColumn::make('lastRawPrice.price')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

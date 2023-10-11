@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Order\CreateOrderRequest;
+use App\Http\Requests\Api\Order\UpdateOrderRequest;
 use App\Http\Resources\Api\OrderResource;
 use App\Models\Order;
 use App\Services\OrderService;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class OrderController extends Controller
 {
+    public function __construct(public OrderService $orderService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -19,7 +24,7 @@ class OrderController extends Controller
         $receipts = QueryBuilder::for(Order::class)
             ->allowedFilters('amount', 'error', 'date')
             ->allowedSorts('id', 'amount', 'date')
-            ->allowedIncludes('client', 'receipt.animalType', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice')
+            ->allowedIncludes('client', 'receipt.animalType', 'orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return OrderResource::collection($receipts);
@@ -28,24 +33,13 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, OrderService $orderService)
+    public function store(CreateOrderRequest $request)
     {
-        $data = $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'receipt_id' => 'required|exists:receipts,id',
-            'batch_quantity' => 'required|numeric|min:1|max:30',
-            'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
-            'batch_inputs.*' => 'required|numeric',
-            'amount' => 'required|numeric|size:'.array_sum($request->input('batch_inputs', [])),
-            'error' => 'required|numeric',
-            'date' => 'required|date',
-        ]);
-
-        $orderService = new OrderService();
+        $data = $request->safe()->all();
 
         $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
 
-        return new OrderResource($orderService->create($data)->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice'));
+        return new OrderResource($this->orderService->create($data)->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice'));
     }
 
     /**
@@ -53,30 +47,19 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'receipt.animalType', 'client'));
+        return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice', 'receipt.animalType', 'client', 'activities.causer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
-        $data = $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'receipt_id' => 'required|exists:receipts,id',
-            'batch_quantity' => 'required|numeric|min:1|max:30',
-            'batch_inputs' => 'required|array|size:'.$request->input('batch_quantity'),
-            'batch_inputs.*' => 'required|numeric',
-            'amount' => 'required|numeric|size:'.array_sum($request->input('batch_inputs', [])),
-            'error' => 'required|numeric',
-            'date' => 'required|date',
-        ]);
-
-        $orderService = new OrderService();
+        $data = $request->safe();
 
         $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
 
-        $order = $orderService->update($order, $data);
+        $order = $this->orderService->update($order, $data);
 
         return new OrderResource($order->load('orderCalculatedRaws.receiptRaw.raw.lastRawPrice'));
     }

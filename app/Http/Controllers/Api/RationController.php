@@ -24,7 +24,7 @@ class RationController extends Controller
         $rations = QueryBuilder::for(Ration::class)
             ->allowedFilters('name', 'rate', 'code', 'unit', 'producer_name', 'concentration')
             ->allowedSorts('id', 'name')
-            ->allowedIncludes('rationRaws.raw.lastRawPrice', 'animalType')
+            ->allowedIncludes('rationRaws.raw.lastRawPrice', 'animalType', 'firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return RationResource::collection($rations);
@@ -58,7 +58,7 @@ class RationController extends Controller
      */
     public function show(Ration $ration)
     {
-        return new RationResource($ration->load('rationRaws.raw.lastRawPrice', 'animalType'));
+        return new RationResource($ration->load('rationRaws.raw.lastRawPrice', 'animalType', 'activities.causer'));
     }
 
     /**

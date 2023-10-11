@@ -54,14 +54,14 @@ class ClientResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('company')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Дата создание')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('country.name')
                     ->numeric()
                     ->sortable(),

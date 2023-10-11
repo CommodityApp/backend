@@ -18,7 +18,7 @@ class ClientController extends Controller
         $clients = QueryBuilder::for(Client::class)
             ->allowedFilters('name', 'industry', 'region', 'company', 'email', 'phone')
             ->allowedSorts('id', 'name')
-            ->allowedIncludes('country')
+            ->allowedIncludes('country', 'firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return ClientResource::collection($clients);
@@ -49,7 +49,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return new ClientResource($client->load('country'));
+        return new ClientResource($client->load('country', 'activities.causer'));
     }
 
     /**

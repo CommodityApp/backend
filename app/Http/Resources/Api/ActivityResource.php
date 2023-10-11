@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BunkerResource extends JsonResource
+class ActivityResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,11 @@ class BunkerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'subject_id' => $this->subject_id,
+            'description' => $this->description,
+            'subject_type' => $this->subject_type,
             'created_at' => $this->created_at?->formattedCustom(),
-            'updated_at' => $this->updated_at?->formattedCustom(),
-            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
-            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
+            'causer' => new UserResource($this->whenLoaded('causer')),
         ];
     }
 }

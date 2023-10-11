@@ -28,6 +28,8 @@ class RationResource extends JsonResource
             'deleted_at' => $this->deleted_at,
             'ration_raws' => RationRawResource::collection($this->whenLoaded('rationRaws')),
             'animal_type' => new AnimalTypeResource($this->whenLoaded('animalType')),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
+            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }

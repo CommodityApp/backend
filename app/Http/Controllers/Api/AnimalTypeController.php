@@ -18,7 +18,8 @@ class AnimalTypeController extends Controller
     {
         $animalTypes = QueryBuilder::for(AnimalType::class)
             ->allowedFilters('name')
-            ->allowedSorts('id', 'name');
+            ->allowedSorts('id', 'name')
+            ->allowedIncludes('firstActivity.causer');
 
         if ($request->input('tree', false)) {
             $animalTypes = $animalTypes->root()->with('nestedChildren');
@@ -47,7 +48,7 @@ class AnimalTypeController extends Controller
      */
     public function show(AnimalType $animalType)
     {
-        return new AnimalTypeResource($animalType->load('nestedParent', 'nestedChildren'));
+        return new AnimalTypeResource($animalType->load('nestedParent', 'nestedChildren', 'activities.causer'));
     }
 
     /**

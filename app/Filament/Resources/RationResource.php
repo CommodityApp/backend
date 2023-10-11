@@ -77,10 +77,14 @@ class RationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('concentration')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
+                    ->sortable()
+                    ->searchable(),
 
             ])
             ->filters([
@@ -98,10 +102,7 @@ class RationResource extends Resource
                     ->requiresConfirmation(),
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('delete')
-                    ->color('danger')
-                    ->icon('heroicon-m-trash')
+                Tables\Actions\DeleteAction::make('delete')
                     ->requiresConfirmation()
                     ->action(
                         function (Ration $record, RationService $rationService) {

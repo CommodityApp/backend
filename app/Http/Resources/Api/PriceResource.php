@@ -22,6 +22,8 @@ class PriceResource extends JsonResource
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
             'price_raws' => RawPriceResource::collection($this->whenLoaded('priceRaws')),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
+            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }

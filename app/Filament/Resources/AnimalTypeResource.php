@@ -22,7 +22,6 @@ class AnimalTypeResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Виды животных';
 
-
     public static function form(Form $form): Form
     {
         return $form
@@ -41,6 +40,14 @@ class AnimalTypeResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
                     ->sortable()
                     ->searchable(),
             ])

@@ -25,6 +25,8 @@ class ClientResource extends JsonResource
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
             'country' => new CountryResource($this->whenLoaded('country')),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
+            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }

@@ -24,7 +24,7 @@ class RawController extends Controller
         $receipts = QueryBuilder::for(Raw::class)
             ->allowedFilters('name', 'code', 'unit', 'concentration', 'batch_number')
             ->allowedSorts('id', 'name', 'code')
-            ->allowedIncludes('lastRawPrice', 'rawType', 'bunker', 'country', 'rawPrices', 'producer')
+            ->allowedIncludes('lastRawPrice', 'rawType', 'bunker', 'country', 'rawPrices', 'producer', 'firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return RawResource::collection($receipts);
@@ -55,7 +55,7 @@ class RawController extends Controller
      */
     public function show(Raw $raw)
     {
-        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer', 'lastRawPrice'));
+        return new RawResource($raw->load('rawType', 'bunker', 'country', 'rawPrices', 'producer', 'activities.causer'));
     }
 
     /**

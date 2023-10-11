@@ -28,9 +28,10 @@ class OrderResource extends JsonResource
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
             'order_calculated_raws' => OrderCalculatedRawResource::collection($this->whenLoaded('orderCalculatedRaws')),
-
             'receipt' => new ReceiptResource($this->whenLoaded('receipt')),
             'client' => new ClientResource($this->whenLoaded('client')),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
+            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }

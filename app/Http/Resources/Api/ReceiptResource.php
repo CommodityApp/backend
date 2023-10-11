@@ -28,6 +28,7 @@ class ReceiptResource extends JsonResource
             'deleted_at' => $this->deleted_at,
             'receipt_raws' => ReceiptRawResource::collection($this->whenLoaded('receiptRaws')),
             'animal_type' => new AnimalTypeResource($this->whenLoaded('animalType')),
+            'first_activity' => new ActivityResource($this->whenLoaded('fistActivity')),
         ];
     }
 }

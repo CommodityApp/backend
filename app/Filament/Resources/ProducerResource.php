@@ -48,6 +48,14 @@ class ProducerResource extends Resource
                 Tables\Columns\TextColumn::make('country.name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

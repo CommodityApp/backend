@@ -22,6 +22,8 @@ class AnimalTypeResource extends JsonResource
             'updated_at' => $this->updated_at?->formattedCustom(),
             'children' => self::collection($this->whenLoaded('nestedChildren')),
             'parent' => new self($this->whenLoaded('nestedParent')),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
+            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }

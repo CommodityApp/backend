@@ -31,4 +31,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('prices/{price}/replicate', [Api\PriceController::class, 'replicate']);
     Route::post('receipts/{receipt}/replicate', [Api\ReceiptController::class, 'replicate']);
     Route::get('/countries', [Api\CountryController::class, 'index']);
+    Route::get('/activities', [Api\ActivityController::class, 'index']);
+    Route::get('/activities/{activity}', [Api\ActivityController::class, 'show']);
 });

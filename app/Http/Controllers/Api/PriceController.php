@@ -24,7 +24,7 @@ class PriceController extends Controller
         $prices = QueryBuilder::for(Price::class)
             ->allowedFilters('name', 'code')
             ->allowedSorts('id', 'name', 'code')
-            ->allowedIncludes('priceRaws.raw')
+            ->allowedIncludes('priceRaws.raw', 'firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return PriceResource::collection($prices);
@@ -38,7 +38,7 @@ class PriceController extends Controller
         $data = $request->safe()->only([
             'code',
             'name',
-            'unit'
+            'unit',
         ]);
 
         $priceRaws = $request->safe()->only([
@@ -55,7 +55,7 @@ class PriceController extends Controller
      */
     public function show(Price $price)
     {
-        return new PriceResource($price->load('priceRaws.raw'));
+        return new PriceResource($price->load('priceRaws.raw', 'activities.causer'));
     }
 
     /**
@@ -66,7 +66,7 @@ class PriceController extends Controller
         $data = $request->safe()->only([
             'code',
             'name',
-            'unit'
+            'unit',
         ]);
 
         $priceRaws = $request->safe()->only([

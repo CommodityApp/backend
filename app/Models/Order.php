@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     /**
      * The attributes that should be cast.
@@ -24,6 +27,16 @@ class Order extends Model
         'calculated_amount_with_error' => 'array',
         'date' => 'datetime:Y-m-d',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logOnly(['*']);
+    }
+
+    public function firstActivity(): MorphOne
+    {
+        return $this->morphOne(Activity::class, 'subject');
+    }
 
     public function client()
     {

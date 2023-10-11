@@ -17,7 +17,7 @@ class ProducerController extends Controller
     {
         $producers = QueryBuilder::for(Producer::class)
             ->allowedFilters('name')
-            ->allowedIncludes('country')
+            ->allowedIncludes('country', 'firstActivity.causer')
             ->allowedSorts('id', 'name')
             ->paginate(request()->input('per_page', 15));
 
@@ -44,7 +44,7 @@ class ProducerController extends Controller
      */
     public function show(Producer $producer)
     {
-        return new ProducerResource($producer->load('country'));
+        return new ProducerResource($producer->load('country', 'activities.causer'));
     }
 
     /**

@@ -20,8 +20,6 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-cog';
-
     protected static ?string $navigationLabel = 'Пользователи';
 
     protected static ?string $navigationGroup = 'Административное управление';
@@ -77,16 +75,14 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('firstActivity.causer.name')
+                    ->label('Создан кем')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создание')
                     ->sortable()
-                    ->dateTime()
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->sortable()
-                    ->dateTime()
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
             ])
             ->filters([
                 //

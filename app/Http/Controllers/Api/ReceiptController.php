@@ -24,7 +24,7 @@ class ReceiptController extends Controller
         $receipts = QueryBuilder::for(Receipt::class)
             ->allowedFilters('name', 'rate', 'code', 'unit', 'producer_name', 'concentration')
             ->allowedSorts('id', 'name')
-            ->allowedIncludes('receiptRaws.raw.lastRawPrice', 'animalType')
+            ->allowedIncludes('receiptRaws.raw.lastRawPrice', 'animalType', 'firstActivity.causer')
             ->paginate(request()->input('per_page', 15));
 
         return ReceiptResource::collection($receipts);
@@ -58,7 +58,7 @@ class ReceiptController extends Controller
      */
     public function show(Receipt $receipt)
     {
-        return new ReceiptResource($receipt->load('receiptRaws.raw.lastRawPrice', 'animalType'));
+        return new ReceiptResource($receipt->load('receiptRaws.raw.lastRawPrice', 'animalType', 'activities.causer'));
     }
 
     /**

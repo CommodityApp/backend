@@ -19,6 +19,7 @@ class RawTypeResource extends JsonResource
             'name' => $this->name,
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
         ];
     }
 }

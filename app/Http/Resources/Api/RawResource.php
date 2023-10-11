@@ -35,6 +35,8 @@ class RawResource extends JsonResource
             'bunker' => new BunkerResource($this->whenLoaded('bunker')),
             'producer' => new ProducerResource($this->whenLoaded('producer')),
             'raw_type' => new RawTypeResource($this->whenLoaded('rawType')),
+            'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
+            'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
     }
 }
