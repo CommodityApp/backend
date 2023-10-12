@@ -55,7 +55,7 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $data = $request->safe();
+        $data = $request->safe()->all();
 
         $data['batch_inputs'] = array_map('floatval', $data['batch_inputs']);
 
