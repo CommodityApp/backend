@@ -22,9 +22,9 @@ class RationController extends Controller
     public function index()
     {
         $rations = QueryBuilder::for(Ration::class)
-            ->allowedFilters('name', 'rate', 'code', 'unit', 'producer_name', 'concentration')
+            ->allowedFilters('name', 'code', 'unit', 'producer_name')
             ->allowedSorts('id', 'name')
-            ->allowedIncludes('rationRaws.raw.lastRawPrice', 'animalType', 'firstActivity.causer')
+            ->allowedIncludes('rationRaws.raw.lastRawPrice', 'firstActivity.causer', 'receipt')
             ->paginate(request()->input('per_page', 15));
 
         return RationResource::collection($rations);
@@ -36,12 +36,11 @@ class RationController extends Controller
     public function store(CreateRationRequest $request)
     {
         $data = $request->safe()->only([
-            'rate',
             'code',
             'name',
             'unit',
+            'receipt_id',
             'producer_name',
-            'concentration',
         ]);
 
         $rationRaws = $request->safe()->only([
@@ -50,7 +49,7 @@ class RationController extends Controller
 
         $ration = $this->rationService->create($data, $rationRaws);
 
-        return new RationResource($ration->load('rationRaws.raw', 'animalType'));
+        return new RationResource($ration->load('rationRaws.raw', 'receipt'));
     }
 
     /**
@@ -58,7 +57,7 @@ class RationController extends Controller
      */
     public function show(Ration $ration)
     {
-        return new RationResource($ration->load('rationRaws.raw.lastRawPrice', 'animalType', 'activities.causer'));
+        return new RationResource($ration->load('rationRaws.raw.lastRawPrice', 'activities.causer', 'receipt'));
     }
 
     /**
@@ -67,12 +66,11 @@ class RationController extends Controller
     public function update(UpdateRationRequest $request, Ration $ration)
     {
         $data = $request->safe()->only([
-            'rate',
             'code',
             'name',
             'unit',
+            'receipt_id',
             'producer_name',
-            'concentration',
         ]);
 
         $rationRaws = $request->safe()->only([
@@ -81,7 +79,7 @@ class RationController extends Controller
 
         $ration = $this->rationService->update($ration, $data, $rationRaws);
 
-        return new RationResource($ration->load('rationRaws.raw', 'animalType'));
+        return new RationResource($ration->load('rationRaws.raw', 'receipt'));
     }
 
     /**
@@ -96,6 +94,6 @@ class RationController extends Controller
 
     public function replicate(Ration $ration)
     {
-        return new RationResource($this->rationService->replicate($ration)->load('rationRaws.raw.lastRawPrice', 'animalType'));
+        return new RationResource($this->rationService->replicate($ration)->load('rationRaws.raw.lastRawPrice', 'receipt'));
     }
 }

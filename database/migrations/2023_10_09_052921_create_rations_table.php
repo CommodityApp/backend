@@ -18,12 +18,11 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('unit')->nullable();
             $table->string('producer_name')->nullable();
-            $table->decimal('concentration', 14, 4)->nullable();
             $table->unsignedInteger('order_column')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('animal_type_id')->nullable();
+            $table->unsignedBigInteger('receipt_id')->nullable();
         });
     }
 

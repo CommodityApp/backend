@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\AnimalType;
 use App\Models\Raw;
+use App\Models\Receipt;
 use App\Services\RationService;
 use Illuminate\Database\Seeder;
 
@@ -21,11 +21,9 @@ class RationSeeder extends Seeder
         $data = [
             'code' => 'R#1',
             'name' => 'Рацион №1',
-            'rate' => '2',
-            'concentration' => '20',
             'unit' => 'кг',
             'producer_name' => 'Узб',
-            'animal_type_id' => AnimalType::whereNotNull('parent_id')->get()->random()?->id,
+            'receipt_id' => Receipt::first()->id,
         ];
 
         $rationRaws = [

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -13,14 +14,27 @@ class Ration extends Model
     use HasFactory, LogsActivity;
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['ration_raws_for_resource'];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
      */
     protected $casts = [
         'rate' => 'decimal:2',
-        'concentration' => 'decimal:2',
     ];
+
+    public function rationRawsForResource(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->rationRaws,
+        );
+    }
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -42,8 +56,8 @@ class Ration extends Model
         return $this->belongsToMany(Raw::class, 'ration_raws');
     }
 
-    public function animalType()
+    public function receipt()
     {
-        return $this->belongsTo(AnimalType::class);
+        return $this->belongsTo(Receipt::class);
     }
 }

@@ -26,6 +26,13 @@ class Receipt extends Model
     }
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['receipt_raws_for_resource'];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -40,9 +47,11 @@ class Receipt extends Model
         return $this->hasMany(ReceiptRaw::class)->ordered();
     }
 
-    public function raws()
+    public function receiptRawsForResource(): Attribute
     {
-        return $this->belongsToMany(Raw::class, 'receipt_raws');
+        return Attribute::make(
+            get: fn () => $this->receiptRaws,
+        );
     }
 
     public function ratio(): Attribute
@@ -50,6 +59,11 @@ class Receipt extends Model
         return Attribute::make(
             get: fn () => $this->receiptRaws->sum('ratio'),
         );
+    }
+
+    public function raws()
+    {
+        return $this->belongsToMany(Raw::class, 'receipt_raws');
     }
 
     public function orders()

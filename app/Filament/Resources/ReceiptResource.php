@@ -3,16 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReceiptResource\Pages;
-use App\Filament\Resources\ReceiptResource\RelationManagers\RawsRelationManager;
+use App\Models\Raw;
 use App\Models\Receipt;
 use App\Services\ReceiptService;
 use Closure;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
 
 class ReceiptResource extends Resource
 {
@@ -28,6 +28,7 @@ class ReceiptResource extends Resource
     {
         return $form
             ->schema([
+
                 Forms\Components\TextInput::make('rate')
                     ->required()
                     ->numeric(),
@@ -44,18 +45,49 @@ class ReceiptResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('concentration')
                     ->numeric()
+                    ->required()
                     ->rules([
-                        function (?Model $record) {
-                            return function (string $attribute, $value, Closure $fail) use ($record) {
-                                if ($record) {
-                                    $sum = $record->receiptRaws()->sum('ratio');
-                                    if ($value < $sum) {
-                                        $fail('Поле :attribute должен быть равен '.$sum);
-                                    }
+                        function (Get $get) {
+                            return function (string $attribute, $value, Closure $fail) use ($get) {
+                                $sum = array_sum(array_column(array_values($get('receipt_raws_for_resource')), 'ratio'));
+
+                                if ($value != $sum) {
+                                    $fail('Поле :attribute должен быть равен '.$sum);
                                 }
                             };
                         },
                     ]),
+                Forms\Components\Repeater::make('receipt_raws_for_resource')
+                    ->schema([
+                        Forms\Components\Select::make('raw_id')
+                            ->label('Сырье')
+                            ->searchable()
+                            ->required()
+                            ->getSearchResultsUsing(
+                                fn (string $search, Get $get): array => Raw::where('name', 'like', "%{$search}%")
+                                    ->whereNotIn(
+                                        'id',
+                                        array_filter(
+                                            array_values(
+                                                array_column($get('../../receipt_raws_for_resource'), 'raw_id')
+                                            )
+                                        )
+                                    )
+                                    ->limit(10)
+                                    ->pluck('name', 'id')
+                                    ->toArray()
+                            )
+                            ->getOptionLabelUsing(fn ($value): ?string => Raw::find($value)?->name),
+
+                        Forms\Components\TextInput::make('ratio')
+                            ->label('Норма')
+                            ->numeric()
+                            ->required(),
+                    ])
+                    ->live()
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->grid(2),
             ]);
     }
 
@@ -100,7 +132,6 @@ class ReceiptResource extends Resource
                         }
                     )
                     ->requiresConfirmation(),
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make('delete')
                     ->requiresConfirmation()
@@ -124,7 +155,7 @@ class ReceiptResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RawsRelationManager::class,
+            // RawsRelationManager::class,
         ];
     }
 
@@ -133,7 +164,6 @@ class ReceiptResource extends Resource
         return [
             'index' => Pages\ListReceipts::route('/'),
             'create' => Pages\CreateReceipt::route('/create'),
-            'view' => Pages\ViewReceipt::route('/{record}'),
             'edit' => Pages\EditReceipt::route('/{record}/edit'),
         ];
     }

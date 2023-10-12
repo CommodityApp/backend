@@ -42,6 +42,7 @@ class ReceiptService
 
         unset($data['code']);
         unset($data['id']);
+        unset($data['receipt_raws_for_resource']);
 
         $receiptRaws = [];
 

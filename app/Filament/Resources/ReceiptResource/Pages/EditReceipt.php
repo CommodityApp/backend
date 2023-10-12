@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\ReceiptResource\Pages;
 
 use App\Filament\Resources\ReceiptResource;
+use App\Services\ReceiptService;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class EditReceipt extends EditRecord
 {
@@ -16,5 +18,15 @@ class EditReceipt extends EditRecord
             Actions\ViewAction::make(),
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function handleRecordUpdate(Model $record, array $data): Model
+    {
+        $receiptRaws = $data['receipt_raws_for_resource'];
+        unset($data['receipt_raws_for_resource']);
+
+        $receiptService = new ReceiptService();
+
+        return $receiptService->update($record, $data, $receiptRaws);
     }
 }

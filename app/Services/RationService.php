@@ -3,11 +3,14 @@
 namespace App\Services;
 
 use App\Models\Ration;
+use App\Models\Receipt;
 
 class RationService
 {
     public function create(array $data, array $rationRaws): Ration
     {
+        $data['rate'] = Receipt::find($data['receipt_id'])->rate + array_sum(array_filter(array_column($rationRaws, 'ratio')));
+
         $ration = Ration::create($data);
 
         $raws = [];
@@ -23,6 +26,8 @@ class RationService
 
     public function update(Ration $ration, array $data, array $rationRaws): Ration
     {
+        $data['rate'] = Receipt::find($data['receipt_id'])->rate + array_sum(array_filter(array_column($rationRaws, 'ratio')));
+
         $ration->update($data);
 
         $raws = [];
@@ -42,6 +47,7 @@ class RationService
 
         unset($data['code']);
         unset($data['id']);
+        unset($data['ration_raws_for_resource']);
 
         $rationRaws = [];
 

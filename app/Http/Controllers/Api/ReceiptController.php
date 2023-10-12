@@ -42,6 +42,7 @@ class ReceiptController extends Controller
             'unit',
             'producer_name',
             'concentration',
+            'animal_type_id',
         ]);
 
         $receiptRaws = $request->safe()->only([
@@ -73,6 +74,7 @@ class ReceiptController extends Controller
             'unit',
             'producer_name',
             'concentration',
+            'animal_type_id',
         ]);
 
         $receiptRaws = $request->safe()->only([
