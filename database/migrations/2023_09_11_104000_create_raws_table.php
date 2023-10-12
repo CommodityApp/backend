@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('unit')->nullable();
             $table->string('concentration')->nullable();
             $table->string('batch_number')->nullable();
+            $table->text('desciption')->nullable();
             $table->unsignedInteger('order_column')->nullable();
             $table->timestamps();
             $table->softDeletes();

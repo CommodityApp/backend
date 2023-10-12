@@ -31,6 +31,9 @@ class RawResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+
+                Forms\Components\Textarea::make('desciption'),
+
                 Forms\Components\TextInput::make('unit')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('concentration')
@@ -75,15 +78,18 @@ class RawResource extends Resource
                 Tables\Columns\TextColumn::make('producer.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('bunker.name')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('bunker.name')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('country.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('lastRawPrice.price')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('desciption')
+                    ->limit(100)
+                    ->words(8),
                 Tables\Columns\TextColumn::make('firstActivity.causer.name')
                     ->label('Создан кем')
                     ->sortable()

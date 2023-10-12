@@ -19,6 +19,7 @@ class RawResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'unit' => $this->unit,
+            'description' => $this->desciption,
             'concentration' => $this->concentration,
             'batch_number' => $this->batch_number,
             'order_column' => $this->order_column,
