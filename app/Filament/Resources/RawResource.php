@@ -32,7 +32,7 @@ class RawResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\Textarea::make('desciption'),
+                Forms\Components\Textarea::make('description'),
 
                 Forms\Components\TextInput::make('unit')
                     ->maxLength(255),
@@ -87,7 +87,7 @@ class RawResource extends Resource
                 Tables\Columns\TextColumn::make('lastRawPrice.price')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('desciption')
+                Tables\Columns\TextColumn::make('description')
                     ->limit(100)
                     ->words(8),
                 Tables\Columns\TextColumn::make('firstActivity.causer.name')
