@@ -30,7 +30,7 @@ class RawController extends Controller
                 'unit',
                 'concentration',
                 'batch_number',
-                AllowedFilter::custom('search', new SearchFilter(['name', 'code', 'unit', 'description']))
+                AllowedFilter::custom('q', new SearchFilter(['name', 'code', 'unit', 'description']))
             )
             ->allowedSorts('id', 'name', 'code')
             ->allowedIncludes('lastRawPrice', 'rawType', 'bunker', 'country', 'rawPrices', 'producer', 'firstActivity.causer')

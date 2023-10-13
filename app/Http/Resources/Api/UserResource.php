@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
             'activities' => ActivityResource::collection($this->whenLoaded('activities')),
         ];
