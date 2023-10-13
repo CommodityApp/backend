@@ -23,7 +23,11 @@ class UserSeeder extends Seeder
 
         CauserResolver::setCauser(User::first());
 
-        User::factory()->count(10)->create();
+        $users = User::factory()->count(10)->create();
+
+        foreach ($users as $user) {
+            $user->assignRole(User::ROLE_ADMIN);
+        }
 
     }
 }
