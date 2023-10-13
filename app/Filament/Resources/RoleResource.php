@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RoleResource\Pages;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Navigation\NavigationItem;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -75,16 +74,6 @@ class RoleResource extends Resource
 
     public static function getNavigationItems(): array
     {
-        return static::canViewAny() ? [
-            NavigationItem::make(static::getNavigationLabel())
-                ->group(static::getNavigationGroup())
-                ->icon(static::getNavigationIcon())
-                ->activeIcon(static::getActiveNavigationIcon())
-                ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName().'.*'))
-                ->badge(static::getNavigationBadge(), color: static::getNavigationBadgeColor())
-                ->sort(static::getNavigationSort())
-                ->url(static::getNavigationUrl()),
-
-        ] : [];
+        return static::canViewAny() ? parent::getNavigationItems() : [];
     }
 }
