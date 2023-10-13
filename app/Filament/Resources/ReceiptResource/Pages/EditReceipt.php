@@ -20,6 +20,13 @@ class EditReceipt extends EditRecord
         ];
     }
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['receipt_raws_for_resource'] = $this->record->receipt_raws_for_resource;
+
+        return $data;
+    }
+
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $receiptRaws = $data['receipt_raws_for_resource'];

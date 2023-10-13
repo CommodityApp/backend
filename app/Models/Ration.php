@@ -14,13 +14,6 @@ class Ration extends Model
     use HasFactory, LogsActivity;
 
     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['ration_raws_for_resource'];
-
-    /**
      * The attributes that should be cast.
      *
      * @var array

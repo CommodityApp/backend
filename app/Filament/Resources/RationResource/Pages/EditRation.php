@@ -20,6 +20,13 @@ class EditRation extends EditRecord
         ];
     }
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['ration_raws_for_resource'] = $this->record->ration_raws_for_resource;
+
+        return $data;
+    }
+
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $receiptRaws = $data['ration_raws_for_resource'];

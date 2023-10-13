@@ -189,7 +189,6 @@ class RationResource extends Resource
         return [
             'index' => Pages\ListRations::route('/'),
             'create' => Pages\CreateRation::route('/create'),
-            'view' => Pages\ViewRation::route('/{record}'),
             'edit' => Pages\EditRation::route('/{record}/edit'),
         ];
     }
