@@ -32,6 +32,7 @@ class CreateRawRequest extends FormRequest
             'country_id' => 'present|nullable|exists:countries,id',
             'raw_type_id' => 'present|nullable|exists:raw_types,id',
             'bunker_id' => 'present|nullable|exists:bunkers,id',
+            'description' => 'present|nullable',
         ];
     }
 }
