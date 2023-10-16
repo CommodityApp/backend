@@ -17,10 +17,11 @@ class ActivityResource extends JsonResource
         return [
             'id' => $this->id,
             'subject_id' => $this->subject_id,
+            'subject_type' => $this->subject_type->getLabel(),
             'description' => $this->description,
-            'subject_type' => $this->subject_type,
             'created_at' => $this->created_at?->formattedCustom(),
             'causer' => new UserResource($this->whenLoaded('causer')),
+
         ];
     }
 }
