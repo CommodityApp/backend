@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Sortable\SortableTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class AnimalType extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, LogsActivity, SortableTrait;
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -25,7 +26,7 @@ class AnimalType extends Model
 
     public function scopeRoot(Builder $query)
     {
-        $query->whereNull('parent_id');
+        $query->whereNull('parent_id')->ordered();
     }
 
     public function parent()
@@ -35,7 +36,7 @@ class AnimalType extends Model
 
     public function children()
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id')->ordered();
     }
 
     public function nestedChildren()
@@ -78,5 +79,10 @@ class AnimalType extends Model
         }
 
         return [['id' => $this->id, 'name' => $this->name]];
+    }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('parent_id', $this->parent_id);
     }
 }

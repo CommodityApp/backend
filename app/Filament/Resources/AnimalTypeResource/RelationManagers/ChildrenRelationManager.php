@@ -41,6 +41,7 @@ class ChildrenRelationManager extends RelationManager
                     ->url(fn (AnimalType $record): string => route('filament.admin.resources.animal-types.edit', $record)),
             ])
             ->heading('Типы животных')
+            ->reorderable('order_column')
             ->paginated(false);
     }
 

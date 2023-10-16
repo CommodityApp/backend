@@ -63,6 +63,7 @@ class AnimalTypeResource extends Resource
                 ]),
             ])
             ->modifyQueryUsing(fn (Builder $query) => $query->root())
+            ->reorderable('order_column')
             ->paginated(false);
     }
 
