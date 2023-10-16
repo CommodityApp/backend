@@ -17,6 +17,7 @@ class RawTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'unit' => $this->unit,
             'created_at' => $this->created_at?->formattedCustom(),
             'updated_at' => $this->updated_at?->formattedCustom(),
             'first_activity' => new ActivityResource($this->whenLoaded('firstActivity')),
