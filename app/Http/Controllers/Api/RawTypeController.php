@@ -31,7 +31,7 @@ class RawTypeController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'unit' => 'present|max:255',
+            'unit' => 'nullable|max:255',
         ]);
 
         $rawType = RawType::create($data);
@@ -54,7 +54,7 @@ class RawTypeController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'unit' => 'present|max:255',
+            'unit' => 'nullable|max:255',
         ]);
 
         $rawType->update($data);

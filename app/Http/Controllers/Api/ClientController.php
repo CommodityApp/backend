@@ -34,7 +34,7 @@ class ClientController extends Controller
             'industry' => 'nullable|string',
             'region' => 'nullable|string',
             'company' => 'nullable|string',
-            'country_id' => 'exists:countries,id',
+            'country_id' => 'nullable|exists:countries,id',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|max:255',
         ]);
@@ -62,7 +62,7 @@ class ClientController extends Controller
             'industry' => 'nullable|string',
             'region' => 'nullable|string',
             'company' => 'nullable|string',
-            'country_id' => 'exists:countries,id',
+            'country_id' => 'nullable|exists:countries,id',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|max:255',
         ]);

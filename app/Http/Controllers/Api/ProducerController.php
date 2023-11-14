@@ -31,7 +31,7 @@ class ProducerController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'country_id' => 'present|exists:countries,id',
+            'country_id' => 'nullable|exists:countries,id',
         ]);
 
         $producer = Producer::create($data);
@@ -54,7 +54,7 @@ class ProducerController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'country_id' => 'present|exists:countries,id',
+            'country_id' => 'nullable|exists:countries,id',
         ]);
 
         $producer->update($data);
